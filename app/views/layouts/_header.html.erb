@@ -1,0 +1,120 @@
+<div class='container' id='main'>
+  <div class='navbar navbar-fixed-top'>
+    <div class='container'>
+      <button type='button' class='navbar-toggle' data-target='.navbar-responsive-collapse' data-toggle='collapse'>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!--<a class= "navbar-brand" href = '/'><img src = 'my_images/logo2.png' alt = 'logo'></a>-->
+
+      <div class='nav-collapse collapse navbar-responsive-collapse'>
+        <ul class='nav navbar-nav'>
+          <li class='active'>
+            <a href="#">Home</a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class='dropdown-toggle' data-toggle='dropdown'>
+              Products
+              <strong class='caret'>
+
+              </strong>
+            </a>
+            <ul class='dropdown-menu'>
+              <li class='divider'>
+              <li class='dropdown-header'>Vegetarian</li>
+              <li>
+                <a href='#'>Fruits and Vegetables</a>
+              </li>
+
+              <li>
+                <a href='#'>Grocery and Staple</a>
+              </li>
+
+              <li>
+                <a href='#'>Bread Dairy</a>
+              </li>
+          </li>
+          <li class='divider'>
+          <li class='dropdown-header'> Non-Vegetarian</li>
+
+          <li>
+            <a href='#'>Eggs</a>
+          </li>
+
+          <li>
+            <a href='#'>Meat</a>
+          </li>
+
+          </li><!--end divider-->
+        </ul>
+        <!--end drop_down menu-->
+        </li><!--dropdown-->
+
+        <li>
+          <a href="#">About Us</a>
+        </li>
+
+        </ul><!--End nav-navBar-->
+        <form class='navbar-form pull-left'>
+          <input type='text' class='form-control' placeholder="Search this site..." id="searchInput">
+          <button type='submit' class="btn btn-default">
+            <span class=" glyphicon glyphicon-search"></span>
+          </button>
+        </form>
+        <%= render 'layouts/account' %>
+      </div>
+      <!--endnav-collapse-->
+    </div>
+  </div>
+  <!--end navbar--->
+  <%= yield :carousel %>
+
+
+  <div class = 'row'>
+    <div class="modal fade" id = 'myModal' role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Login/SignUp</h4>
+          </div> <!--modal-header-->
+          <div class="modal-body">
+            Random
+          </div> <!--modal-body-->
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+
+        </div><!--modal-content-->
+      </div><!--modal-dialog-->
+    </div> <!--modal-fade-->
+  </div>
+
+  <div class='row' id='bigCallout'>
+
+  </div>
+  <!--end bigCallout-->
+  <div class='row' id='featuresHeading'>
+
+  </div>
+  <!--end featuresHeading-->
+
+  <div class='row' id='features'>
+
+  </div>
+  <!--end features-->
+
+  <div class='row' id='moreInfo'>
+
+  </div>
+  <!--end moreInfo-->
+
+  <div class='row' id='moreCourses'>
+
+  </div>
+  <!--end moreCourses-->
+
+</div>

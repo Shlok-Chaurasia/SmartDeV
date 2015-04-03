@@ -1,0 +1,111 @@
+/*
+
+My Custom CSS
+=============
+
+Author:  Brad Hussey
+Updated: August 2013
+Notes:	 Hand coded for Udemy.com
+
+*/
+/*----------For moving footer to bottom------------*/
+html,
+body {
+   height: 100%;
+   /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+   min-height: 100%;
+   height: auto;
+   /* Negative indent footer by its height */
+   margin: 0 auto -160px;
+   /* Pad bottom by footer height */
+   padding: 0 0 160px;
+}
+
+/* Set the fixed height of the footer here */
+
+/* --------------------------------------
+   Layout
+   -------------------------------------- */
+
+
+
+/* --------------------------------------
+   Typography
+   -------------------------------------- */
+
+
+
+/* --------------------------------------
+   Navbar
+   -------------------------------------- */
+   #searchInput{
+      width: 200px;
+   }
+
+
+/* --------------------------------------
+   Carousel
+   -------------------------------------- */
+#my_carousel .item{
+   height:400px;
+}
+
+.carousel-caption{
+   font-size: 24px;
+}
+
+
+.carousel-caption > h4{
+   font-size: 32px;
+}
+
+#slide1{
+   background: url('../../my_images/combo_offer.jpg') top center no-repeat;
+}
+
+#slide2{
+   background: url('../../my_images/grocery-offers.jpg') top center no-repeat;
+}
+
+#slide3{
+   background: url('../../my_images/buy_now.jpg') top center no-repeat;
+}
+/*------------------------------------------------
+Footer
+*/
+
+footer{
+   background:#333;
+   color: #eee;
+   font-size: 11px;
+   padding: 20px;
+   height: 160px;
+}
+/* --------------------------------------
+   Global Styles
+   -------------------------------------- */
+
+
+
+/* --------------------------------------
+   Media Queries
+   -------------------------------------- */
+
+/* Portrait & landscape phone */
+@media (max-width: 480px) {
+	
+}
+
+/* Landscape phone to portrait tablet */
+@media (max-width: 768px) {
+	
+}
+
+/* Large desktop */
+@media (min-width: 1200px) {
+	
+}

@@ -1,0 +1,44 @@
+<% content_for :carousel do %>
+
+<div class='carousel slide' id='my_carousel'>
+  <!--indicators:-->
+  <ol class=carousel-indicators>
+    <li class="active" data-slide-to="0" data-target="#my_carousel"></li>
+    <li data-slide-to="1" data-target="#my_carousel"></li>
+    <li data-slide-to="2" data-target="#my_carousel"></li>
+  </ol>
+  <!--indicators:-->
+
+  <div class='carousel-inner'>
+    <div class="item active" id='slide1'>
+      <div class="carousel-caption">
+        <h4>Buy now</h4>
+
+        <p>Buy Now,10% Discount on all the products </p>
+      </div>
+      <!--endcarousel-caption-->
+    </div>
+    <div class="item" id='slide2'>
+      <div class="carousel-caption">
+        <h4 style="color:green">Free Home Delivery</h4>
+
+        <p style="color:green">Upto 5 orders 100rs off</p>
+      </div>
+      <!--endcarousel-caption-->
+    </div>
+    <div class="item" id='slide3'>
+      <div class="carousel-caption">
+        <h4 style="color:green">Buy now</h4>
+
+        <p style="color:green">Buy Now </p>
+      </div>
+      <!--endcarousel-caption-->
+    </div>
+  </div>
+  <!--carousel-inner end-->
+  <!--#controls-->
+  <a class='left carousel-control' data-slide="prev" href='#my_carousel'><span class="icon-prev"></span></a>
+  <a class='right carousel-control' data-slide="next" href='#my_carousel'><span class="icon-next"></span></a>
+  <!--#controls-->
+</div>
+<% end %>
