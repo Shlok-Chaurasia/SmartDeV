@@ -1,5 +1,7 @@
 Smarty::Application.routes.draw do
+  root :to => 'sign_up#home'
   match 'home/' => 'sign_up#home'
+  match "create_user/" => "sign_up#create_user", :via => :post
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
