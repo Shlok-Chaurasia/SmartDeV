@@ -1,10 +1,11 @@
 <div class = 'row'>
   <div class="modal fade" id = 'myModal' role="dialog">
-    <div class="modal-dialog">
+        <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Login/SignUp</h4>
+
+          <h4 class="modal-title">SignUp/Login</h4>
         </div> <!--modal-header-->
         <div class="modal-body">
           <div class="tabbable">
@@ -21,28 +22,30 @@
               <div class="tab-pane " id = "tab2">
               </div>
               <div class="tab-pane active" id = "tab1">
-                <form action = "/create_user" method="post">
+                <div id = 'temp' class="alert alert-danger" hidden="true"></div>
+                <form id = 'sign_up_form' action = '/create_user' method='post' onsubmit="return create_user();">
+                  <hr>
                   <div class="form-group">
-                    <label for="exampleInputname">Name</label>
+                    <!--<label for="exampleInputname">Name</label>-->
                     <input name="name" type="name" class="form-control" id="inputName" placeholder="Name" required>
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputusername">User Name</label>
+                    <!--<label for="exampleInputusername">User Name</label>-->
                     <input name="user_name" type="name" class="form-control" id="inputUserName" placeholder="Preferred UserName" required>
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputEmail">Email address</label>
+                    <!--<label for="exampleInputEmail">Email address</label>-->
                     <input name="email" type="email" class="form-control" id="inputEmail" placeholder="Enter email" required>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputPassword">Password</label>
+                    <!--<label for="exampleInputPassword">Password</label>-->
                     <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password" required>
                   </div>
 
                   <div class="form-group">
-                    <label for="exampleInputphone">Phone Number</label>
+                    <!--<label for="exampleInputphone">Phone Number</label>-->
                     <input name="phone" type="tel" class="form-control" id="inputTelephone" placeholder="Mobile Number" required>
                   </div>
 
@@ -51,7 +54,7 @@
                       <!--<input type="checkbox"> Remember Me-->
                     <!--</label>-->
                   <!--</div>-->
-                  <button type="submit" class="btn btn-default">Sign up</button>
+                  <button id ='create_btn'type="submit"  class="btn btn-default">Sign up</button>
                 </form>
               </div>
 
@@ -63,3 +66,66 @@
     </div><!--modal-dialog-->
   </div> <!--modal-fade-->
 </div>
+<script>
+
+//    $(document).ready(
+//                function()
+//                        {
+//                            $('.close').on('click', function(event){
+//                                event.preventDefault();
+//                                alert('sss');
+//                                $('.sign_up_form').reset();
+//                            })
+////                            alert('bc');
+////                            $('#myModal').on('hidden.bs.modal',
+////                                    function ()
+////                                            {
+////                                            alert('event received!!');
+////                                            }
+////                                            )
+//                        }
+//                    );
+////    $(document).on('hide.bs.modal','#myModal', function () {
+//        alert('event received!!');
+//        $(this).find('form')[0].reset();
+//        //Do stuff here
+//    });
+//    $(document).ready($('.modal').on('hidden.bs.modal', function(){
+//        $(this).find('form')[0].reset();
+//    }));
+$(function(){$('#myModal').on('hidden.bs.modal',function(){
+            alert('hey fucker');
+            $('#sign_up_form')[0].reset();
+        });
+});
+    function create_user()
+    {
+        $(document).ready(function(){
+            $('#create_btn').on('click', function(event){
+                var form = $("#sign_up_form");
+                console.log(form.attr('action'));
+                event.preventDefault();
+                $("#create_btn").attr("disabled", true);
+                $.ajax({
+                    type: 'post',
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function(data){
+                        console.log(data);
+                        $('#temp').html("Hello!! "+data.user_name + ", your login succesfully created." +
+                        "               Please login with your username and password.");
+                    },
+                    error: function(xhr, status, error){
+                        $("#temp").attr("hidden", false);
+                        $('#temp').html(xhr.responseText);
+                    },
+                    dataType: 'JSON'
+                })
+                $("#create_btn").attr("disabled", false);
+//                $('#sign_up_form')[0].reset();
+            })
+
+        })
+        return false;
+    }
+ </script>

@@ -1,0 +1,80 @@
+<% content_for :product do %>
+    <div class='row' id='featuresHeading'>
+        <div class="col-12">
+            <h2>More Products</h2>
+          <p class="lead">
+            RandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandom
+          </p>
+        </div><!--end col2-->
+    </div>
+    <!--end featuresHeading-->
+
+    <div class='row' id="features">
+
+      <%@products.each do |product|%>
+
+        <div class="col-sm-3 feature">
+          <div class="panel">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= product.name%></h3>
+            </div><!--end-panel-heading-->
+            <img src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle" width="200" height="200">
+            <p>Apple is shit!!! Dont eat</p>
+            <a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>
+
+          </div>
+        </div> <!--end-feature-->
+
+      <%end%>
+
+      <!--<div class="col-sm-3 feature">-->
+        <!--<div class="panel">-->
+          <!--<div class="panel-heading">-->
+            <!--<h3 class="panel-title">Products Potato</h3>-->
+          <!--</div>&lt;!&ndash;end-panel-heading&ndash;&gt;-->
+          <!--<img src="/my_images/products/apple.jpg" alt="apple">-->
+          <!--<p>Apple is shit!!! Dont eat</p>-->
+          <!--<a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>-->
+        <!--</div>-->
+      <!--</div> &lt;!&ndash;end-feature&ndash;&gt;-->
+
+
+      <!--<div class="col-sm-3 feature">-->
+        <!--<div class="panel">-->
+          <!--<div class="panel-heading">-->
+            <!--<h3 class="panel-title">Products Potato</h3>-->
+          <!--</div>&lt;!&ndash;end-panel-heading&ndash;&gt;-->
+          <!--<img src="/my_images/products/apple.jpg" alt="apple">-->
+          <!--<p>Apple is shit!!! Dont eat</p>-->
+          <!--<a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>-->
+        <!--</div>-->
+      <!--</div> &lt;!&ndash;end-feature&ndash;&gt;-->
+
+      <!--<div class="col-sm-3 feature">-->
+        <!--<div class="panel">-->
+          <!--<div class="panel-heading">-->
+            <!--<h3 class="panel-title">Products Potato</h3>-->
+          <!--</div>&lt;!&ndash;end-panel-heading&ndash;&gt;-->
+          <!--<img src="/my_images/products/apple.jpg" alt="apple">-->
+          <!--<p>Apple is shit!!! Dont eat</p>-->
+          <!--<a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>-->
+        <!--</div>-->
+      <!--</div> &lt;!&ndash;end-feature&ndash;&gt;-->
+
+
+    </div>
+    <div class='pagination' id='pagination'>
+    <ul class="pagination" id="page1">
+      <%@product_pages = @all_product_count/12 %>
+      <% @product_pages.times do |number|%>
+          <li><a href="/product/fruits?page_number=<%= number%>"><%= number+1%></a></li>
+      <% end%>
+      <%unless @all_product_count - @product_pages == 0 %>
+          <li><a href="/product/fruits?page_number=<%= @product_pages%>"><%= @product_pages+1%></a></li>
+      <% end%>
+    </ul>
+    </div>
+    <script>
+
+    </script>
+<% end %>

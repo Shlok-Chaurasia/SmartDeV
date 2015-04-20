@@ -19,9 +19,16 @@
 
 </head>
 <body>
+
 <div id="wrap">
-  <%= render 'layouts/header' %>
+  <div class='container' id='main'>
+    <%= render 'layouts/header' %>
+    <hr>
+    <%= yield :carousel %>
+    <%= yield :product %>
+  </div>
 </div>
+
 
 <%= render 'layouts/footer' %>
 
