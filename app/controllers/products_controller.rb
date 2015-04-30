@@ -9,4 +9,10 @@ class ProductsController < ApplicationController
       @products = Product.order(:id).limit(12).offset(12*params['page_number'].to_i)
     end
   end
+
+  def partial_page
+    puts "params['page_number'].to_i", params['page_number'].to_i
+    @products = Product.order(:id).limit(12).offset(12 * params['page_number'].to_i)
+  end
+
 end

@@ -1,0 +1,29 @@
+<%@products.each do |product|%>
+
+    <div class="col-sm-3 feature">
+      <form>
+        <div class="panel">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%= product.name%></h3>
+          </div><!--end-panel-heading-->
+          <img src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle"
+               width="100" height="100">
+          <hr>
+          <!--<%if product.product_stocks.count > 0 %>-->
+              <select id="qty" class="form-control">
+                <%product.product_stocks.each do |product_stock|%>
+                    <option value="<%= product_stock.available_stock_in_grams%>">
+                      <%= product_stock.available_stock_in_grams%>
+                    </option>
+                <%end%>
+              </select>
+
+              <!--<%end%>-->
+          <hr>
+          <a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>
+
+        </div>
+      </form>
+    </div> <!--end-feature-->
+
+<%end%>

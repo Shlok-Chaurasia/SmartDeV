@@ -1,5 +1,5 @@
 <% content_for :product do %>
-    <div class='row' id='featuresHeading'>
+    <div class='row' id='featuresHeading' xmlns="http://www.w3.org/1999/html">
         <div class="col-12">
             <h2>More Products</h2>
           <p class="lead">
@@ -9,60 +9,47 @@
     </div>
     <!--end featuresHeading-->
 
-    <div class='row' id="features">
+    <div class='row' id="features" >
 
       <%@products.each do |product|%>
 
         <div class="col-sm-3 feature">
+          <form id="<%= product.id%>">
           <div class="panel">
             <div class="panel-heading">
               <h3 class="panel-title"><%= product.name%></h3>
             </div><!--end-panel-heading-->
-            <img src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle" width="200" height="200">
-            <p>Apple is shit!!! Dont eat</p>
-            <a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>
+            <img src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle"
+                 width="100" height="100">
+            <hr>
+            <%if product.product_stocks.count > 0 %>
+            <select id="<%= product.id%>-qty" class="form-control">
+              <%product.product_stocks.each do |product_stock|%>
+                  <option value="<%= product_stock.available_stock_in_grams%>">
+                    <%= product_stock.available_stock_in_grams%>
+                  </option>
+              <%end%>
+            </select>
+            <%end%>
+            <hr>
+            <button id = 'create_btn' value="submit"
+                    onclick="addToCart(<%= product.id%>)" class="btn btn-warning btn-block">Add To Cart</button>
 
           </div>
+          </form>
+
         </div> <!--end-feature-->
 
+
       <%end%>
-
-      <!--<div class="col-sm-3 feature">-->
-        <!--<div class="panel">-->
-          <!--<div class="panel-heading">-->
-            <!--<h3 class="panel-title">Products Potato</h3>-->
-          <!--</div>&lt;!&ndash;end-panel-heading&ndash;&gt;-->
-          <!--<img src="/my_images/products/apple.jpg" alt="apple">-->
-          <!--<p>Apple is shit!!! Dont eat</p>-->
-          <!--<a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>-->
-        <!--</div>-->
-      <!--</div> &lt;!&ndash;end-feature&ndash;&gt;-->
-
-
-      <!--<div class="col-sm-3 feature">-->
-        <!--<div class="panel">-->
-          <!--<div class="panel-heading">-->
-            <!--<h3 class="panel-title">Products Potato</h3>-->
-          <!--</div>&lt;!&ndash;end-panel-heading&ndash;&gt;-->
-          <!--<img src="/my_images/products/apple.jpg" alt="apple">-->
-          <!--<p>Apple is shit!!! Dont eat</p>-->
-          <!--<a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>-->
-        <!--</div>-->
-      <!--</div> &lt;!&ndash;end-feature&ndash;&gt;-->
-
-      <!--<div class="col-sm-3 feature">-->
-        <!--<div class="panel">-->
-          <!--<div class="panel-heading">-->
-            <!--<h3 class="panel-title">Products Potato</h3>-->
-          <!--</div>&lt;!&ndash;end-panel-heading&ndash;&gt;-->
-          <!--<img src="/my_images/products/apple.jpg" alt="apple">-->
-          <!--<p>Apple is shit!!! Dont eat</p>-->
-          <!--<a href="" target="_blank" class="btn btn-warning btn-block">Add To Cart</a>-->
-        <!--</div>-->
-      <!--</div> &lt;!&ndash;end-feature&ndash;&gt;-->
-
-
     </div>
+      <!--<div id="button-more" onclick=load_page();>-->
+        <!--Load more items-->
+      <!--</div>-->
+      <!--<div id="loading-div">-->
+        <!--loading more items-->
+      <!--</div>-->
+    <!--</div>-->
     <div class='pagination' id='pagination'>
     <ul class="pagination" id="page1">
       <%@product_pages = @all_product_count/12 %>
@@ -75,6 +62,85 @@
     </ul>
     </div>
     <script>
+
+
+        load_page.counter = 2;
+        function load_page()
+        {
+            $(document).ready(function(){
+                $('#button-more').on('click', function(event){
+                    var page = 2,
+                            loadingId = "#loading-div",
+                            container = "#features";
+                    var url_page = '/products/partial_page?page_number=' + load_page.counter;
+                    $.ajax({
+                        type: 'get',
+                        url: url_page,
+                        success: function(response){
+                            if (!response || response.trim() == "NONE") {
+                                $("#button-more").fadeOut();
+                                $(loadingId).text("No more entries to load!");
+                                return;
+                            }
+                            appendContests(response);
+                        },
+                        error: function(xhr){
+                            $(loadingId).text("Sorry, there was some error with the request. Please refresh the page.");
+                        }
+                    })
+
+                })
+
+            })
+            return false;
+        }
+
+            function appendContests(response){
+                $('#button-more').show();
+                $("#loading-div").hide();
+
+                $(response).appendTo($('#features'));
+                load_page.counter++;
+            }
+
+
+
+
+
+        function addToCart(id)
+        {   alert(id);
+            $(document).ready(function(){
+
+                $('#create_btn').on('click', function(event){
+                    var form = $("#"+id);
+                    alert(id);
+//                    console.log(form.attr('action'));
+//                    event.preventDefault();
+//                    $("#create_btn").attr("disabled", true);
+//                    $.ajax({
+//                        type: 'post',
+//                        url: form.attr('action'),
+//                        data: form.serialize(),
+//                        success: function(data){
+//                            console.log(data);
+//                            $('#temp').html("Hello!! "+data.user_name + ", your login succesfully created." +
+//                            "               Please login with your username and password.");
+//                        },
+//                        error: function(xhr, status, error){
+//                            $("#temp").attr("hidden", false);
+//                            $('#temp').html(xhr.responseText);
+//                        },
+//                        dataType: 'JSON'
+//                    })
+//                    $("#create_btn").attr("disabled", false);
+//                $('#sign_up_form')[0].reset();
+                })
+
+            })
+            return true;
+        }
+
+
 
     </script>
 <% end %>

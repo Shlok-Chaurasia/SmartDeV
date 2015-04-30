@@ -10,13 +10,28 @@ VEGETABLE = 'vegetable'
 SELLER_ID = 1
 IMAGE_BASE_URL = '/my_images/products/'
 
-Product.create!(:name => 'apple1',:category_type => FRUITS, :seller_id => SELLER_ID, :price=>220.00,
+
+product = Product.create!(:name => 'apple1',:category_type => FRUITS, :seller_id => SELLER_ID, :price=>220.00,
                 :image_url => IMAGE_BASE_URL+'apple.jpg')
-Product.create!(:name => 'apple2',:category_type => FRUITS, :seller_id => SELLER_ID+1, :price=>220.00,
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+
+product = Product.create!(:name => 'apple2',:category_type => FRUITS, :seller_id => SELLER_ID+1, :price=>220.00,
                 :image_url => IMAGE_BASE_URL+'apple.jpg')
-Product.create!(:name => 'apple3',:category_type => FRUITS, :seller_id => SELLER_ID+2, :price=>220.00,
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+
+product = Product.create!(:name => 'apple3',:category_type => FRUITS, :seller_id => SELLER_ID+2, :price=>220.00,
                 :image_url => IMAGE_BASE_URL+'apple.jpg')
-Product.create!(:name => 'potato1',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+
+product = Product.create!(:name => 'potato1',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
                 :image_url => IMAGE_BASE_URL+'potato.jpg')
-Product.create!(:name => 'potato2',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+
+product = Product.create!(:name => 'potato2',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
                 :image_url => IMAGE_BASE_URL+'potato.jpg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
