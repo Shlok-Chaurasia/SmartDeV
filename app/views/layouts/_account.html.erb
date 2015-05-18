@@ -1,22 +1,76 @@
+<% if logged_in?%>
 <ul class='nav navbar-nav pull-right'>
   <li class='dropdown'>
+
     <a href='#' class='dropdown-toggle' data-toggle="dropdown">
-      Hello! <span class='glyphicon glyphicon-user'></span> My Account<strong class="caret"></strong>
+        Hello! <span class='glyphicon glyphicon-user'></span> <%= current_user.user_name%><strong class="caret"></strong>
     </a>
     <ul class="dropdown-menu">
       <li>
         <!--Insert your Logic for signup and UpdatemyuserAccount-->
         <a href='#myModal' role = 'button' class ='btn' data-toggle="modal">
-          <span class=" glyphicon glyphicon-wrench"> Update User Profile</span>
+          Your Order:
         </a>
       </li>
       <li class='divider'>
         <!--Insert your Logic for signout and Login-->
       <li class='dropdown-header'></li>
       <li>
-        <a href='#'><span class=" glyphicon glyphicon-off"> SignOut</span></a>
+        <a id="del" href="" onclick="return delete_user();"><span class=" glyphicon glyphicon-off"> SignOut</span></a>
       </li>
-  </li>
-</ul>
-</li>
+     </li>
+    </ul>
+    </li>
 </ul><!--end userAccount nav pullright-->
+<%else%>
+    <ul class='nav navbar-nav pull-right'>
+      <li class='dropdown'>
+        <a href='#' class='dropdown-toggle' data-toggle="dropdown">
+          Create Account <span class=" glyphicon glyphicon-user">
+           </span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <!--Insert your Logic for signup and UpdatemyuserAccount-->
+            <a href='#myModal' role = 'button' class ='btn' data-toggle="modal">
+              <span class=" glyphicon glyphicon-wrench"> Sign Up</span>
+            </a>
+          </li>
+
+          <li>
+            <a id ="tab_change" role = 'button' class ='btn' href="#myModal" data-toggle="modal">
+              <span class=" glyphicon glyphicon-log-in"> Login</span>
+            </a>
+          </li>
+
+    </ul>
+    </li>
+
+    </ul><!--end userAccount nav pullright-->
+
+<%end%>
+
+<script>
+    function delete_user(){
+        $(document).ready(function(){
+            $('#del').on('click', function(event){
+                event.preventDefault();
+                $.ajax({
+                    type: 'delete',
+                    url: "/logout",
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(xhr, status, error){
+                        console.log(xhr.responseText);
+                    },
+                    dataType: 'script',
+                    async: false
+                })
+//                $('#sign_up_form')[0].reset();
+            })
+
+        })
+        return false;
+    }
+</script>

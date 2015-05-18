@@ -15,4 +15,8 @@ class ProductsController < ApplicationController
     @products = Product.order(:id).limit(12).offset(12 * params['page_number'].to_i)
   end
 
+  def add_product
+
+  end
+
 end

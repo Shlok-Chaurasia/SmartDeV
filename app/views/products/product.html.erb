@@ -23,7 +23,7 @@
                  width="100" height="100">
             <hr>
             <%if product.product_stocks.count > 0 %>
-            <select id="<%= product.id%>-qty" class="form-control">
+            <select id="<%= product.id%>_qty" class="form-control">
               <%product.product_stocks.each do |product_stock|%>
                   <option value="<%= product_stock.available_stock_in_grams%>">
                     <%= product_stock.available_stock_in_grams%>
@@ -32,8 +32,9 @@
             </select>
             <%end%>
             <hr>
-            <button id = 'create_btn' value="submit"
-                    onclick="addToCart(<%= product.id%>)" class="btn btn-warning btn-block">Add To Cart</button>
+            <input type="submit" value="1ahaha" id="<%= product.id%>" />
+            <!--<button id = 'create_btn' value="submit"-->
+                    <!--onclick="addToCart(<%= product.id%>)" class="btn btn-warning btn-block">Add To Cart</button>-->
 
           </div>
           </form>
@@ -61,86 +62,45 @@
       <% end%>
     </ul>
     </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
     <script>
+        $(document).ready(function(){
+            $("form").submit(function(event){
+                        alert($(this).attr("id"));
+                        var select_id = $(this).attr("id") + "_qty";
+                        var quantity = $("#"+select_id +" option:selected").text();
+                        alert(quantity);
+                var formData = {
+                    'product_id'              : $(this).attr("id"),
+                    'quantity'             : quantity
+                };
 
-
-        load_page.counter = 2;
-        function load_page()
-        {
-            $(document).ready(function(){
-                $('#button-more').on('click', function(event){
-                    var page = 2,
-                            loadingId = "#loading-div",
-                            container = "#features";
-                    var url_page = '/products/partial_page?page_number=' + load_page.counter;
-                    $.ajax({
-                        type: 'get',
-                        url: url_page,
-                        success: function(response){
-                            if (!response || response.trim() == "NONE") {
-                                $("#button-more").fadeOut();
-                                $(loadingId).text("No more entries to load!");
-                                return;
-                            }
-                            appendContests(response);
-                        },
-                        error: function(xhr){
-                            $(loadingId).text("Sorry, there was some error with the request. Please refresh the page.");
-                        }
-                    })
-
+                // process the form
+                $.ajax({
+                    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                    url         : '/add_product', // the url where we want to POST
+                    data        : formData, // our data object
+                    dataType    : 'json', // what type of data do we expect back from the server
+                    encode          : true
                 })
+                    // using the done promise callback
+                        .done(function(data) {
 
-            })
-            return false;
-        }
+                            // log data to the console so we can see
+                            console.log(data);
 
-            function appendContests(response){
-                $('#button-more').show();
-                $("#loading-div").hide();
+                            // here we will handle errors and validation messages
+                        });
 
-                $(response).appendTo($('#features'));
-                load_page.counter++;
-            }
-
+                // stop the form from submitting the normal way and refreshing the page
+                event.preventDefault();
 
 
 
 
-        function addToCart(id)
-        {   alert(id);
-            $(document).ready(function(){
+                    });
 
-                $('#create_btn').on('click', function(event){
-                    var form = $("#"+id);
-                    alert(id);
-//                    console.log(form.attr('action'));
-//                    event.preventDefault();
-//                    $("#create_btn").attr("disabled", true);
-//                    $.ajax({
-//                        type: 'post',
-//                        url: form.attr('action'),
-//                        data: form.serialize(),
-//                        success: function(data){
-//                            console.log(data);
-//                            $('#temp').html("Hello!! "+data.user_name + ", your login succesfully created." +
-//                            "               Please login with your username and password.");
-//                        },
-//                        error: function(xhr, status, error){
-//                            $("#temp").attr("hidden", false);
-//                            $('#temp').html(xhr.responseText);
-//                        },
-//                        dataType: 'JSON'
-//                    })
-//                    $("#create_btn").attr("disabled", false);
-//                $('#sign_up_form')[0].reset();
-                })
-
-            })
-            return true;
-        }
-
-
-
+        });
     </script>
 <% end %>

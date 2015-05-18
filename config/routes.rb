@@ -1,9 +1,16 @@
 Smarty::Application.routes.draw do
+  get "sessions/new"
+
   root :to => 'user_sign_in#home'
   match 'home/' => 'user_sign_in#home'
   match "create_user/" => "user_sign_in#create", :via => :post
   match 'product/fruits' => 'products#product'
   match 'products/partial_page' => 'products#partial_page'
+  match 'products/add_product' => 'products#add_product', :via => :post
+
+  get    'login'   => 'sessions#new'
+  post   'login'   => 'sessions#create'
+  delete 'logout'  => 'sessions#destroy'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
