@@ -7,10 +7,10 @@ Smarty::Application.routes.draw do
   match 'product/fruits' => 'products#product'
   match 'products/partial_page' => 'products#partial_page'
   match 'products/add_product' => 'products#add_product', :via => :post
-
+  match 'error/' => 'errors#error'
   get    'login'   => 'sessions#new'
-  post   'login'   => 'sessions#create'
-  delete 'logout'  => 'sessions#destroy'
+  post   'login'   => 'user_sign_in#login'
+  get 'logout'  => 'user_sign_in#logout'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

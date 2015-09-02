@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    render :js => "window.location = '/home'"
   end
 
   def create

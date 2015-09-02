@@ -22,7 +22,7 @@
 
               <div class="tab-pane" id = "tab2">
                 <div id = 'temp1' class="alert alert-danger" hidden="true"></div>
-                <form action="/login" method="post" id ="login" onsubmit="return login_user();">
+                <form action="/login" method="post" id ="login" >
                   <hr>
                   <div class="form-group">
                     <input class="form-control" id="session_email" name="session[email]" type="text" placeholder="Email ID" required >
@@ -38,7 +38,7 @@
               </div>
               <div class="tab-pane active" id = "tab1">
                 <div id = 'temp' class="alert alert-danger" hidden="true"></div>
-                <form id = 'sign_up_form' action = '/create_user' method='post' onsubmit="return create_user();">
+                <form id = 'sign_up_form' action = '/create_user' method='post' >
                   <hr>
                   <div class="form-group">
                     <!--<label for="exampleInputname">Name</label>-->
@@ -112,67 +112,71 @@
 //            $('#sign_up_form')[0].reset();
 //        });
 //});
-    function create_user()
-    {
-        $(document).ready(function(){
-            $('#create_btn').on('click', function(event){
-                var form = $("#sign_up_form");
-                console.log(form.attr('action'));
-                event.preventDefault();
-                $("#create_btn").attr("disabled", true);
-                $.ajax({
-                    type: 'post',
-                    url: form.attr('action'),
-                    data: form.serialize(),
-                    success: function(data){
-                        console.log(data);
-                        $('#temp').html("Hello!! "+data.user_name + ", your login succesfully created." +
-                        "               Please login with your username and password.");
-                    },
-                    error: function(xhr, status, error){
-                        $("#temp").attr("hidden", false);
-                        $('#temp').html(xhr.responseText);
-                    },
-                    dataType: 'JSON'
-                })
-                $("#create_btn").attr("disabled", false);
-//                $('#sign_up_form')[0].reset();
-            })
 
-        })
-        return false;
-    }
-
-
-
-function login_user()
-{
-    $(document).ready(function(){
-        $('#login_form').on('click', function(event){
-            var form = $("#login");
-            console.log(form.attr('action'));
-            event.preventDefault();
-            $("#login").attr("disabled", true);
-            $.ajax({
-                type: 'post',
-                url: form.attr('action'),
-                data: form.serialize(),
-                success: function(data){
-                    console.log(data);
-                },
-                error: function(xhr, status, error){
-                    console.log(xhr.responseText);
-                },
-                dataType: 'script',
-                async: false
-            })
-            $("#login_form").attr("disabled", false);
-//                $('#sign_up_form')[0].reset();
-        })
-
-    })
-    return false;
-}
+//sajasjhsaghjag
+//
+//    function create_user()
+//    {
+//        $(document).ready(function(){
+//            $('#create_btn').on('click', function(event){
+//                var form = $("#sign_up_form");
+//                console.log(form.attr('action'));
+//                event.preventDefault();
+//                $("#create_btn").attr("disabled", true);
+//                $.ajax({
+//                    type: 'post',
+//                    url: form.attr('action'),
+//                    data: form.serialize(),
+//                    success: function(data){
+//                        console.log(data);
+//                        $('#temp').html("Hello!! "+data.user_name + ", your login succesfully created." +
+//                        "               Please login with your username and password.");
+//                    },
+//                    error: function(xhr, status, error){
+//                        $("#temp").attr("hidden", false);
+//                        $('#temp').html(xhr.responseText);
+//                    },
+//                    dataType: 'JSON'
+//                })
+//                $("#create_btn").attr("disabled", false);
+////                $('#sign_up_form')[0].reset();
+//            })
+//
+//        })
+//        return false;
+//    }
+//
+//
+//
+//function login_user()
+//{
+//    $(document).ready(function(){
+//        $('#login_form').on('submit', function(event){
+//            var form = $("#login");
+//            console.log(form.attr('action'));
+//            event.preventDefault();
+//            $("#login").attr("disabled", true);
+//            $.ajax({
+//                type: 'post',
+//                url: form.attr('action'),
+//                data: form.serialize(),
+//                success: function(data){
+//                    console.log(data);
+//                },
+//                error: function(xhr, status, error){
+//                    console.log(xhr.responseText);
+//                },
+//                dataType: 'script',
+//                async: "false"
+//            })
+//            $("#login_form").attr("disabled", false);
+//            return true;
+////                $('#sign_up_form')[0].reset();
+//        })
+//
+//    })
+//    return false;
+//}
 
 
  </script>

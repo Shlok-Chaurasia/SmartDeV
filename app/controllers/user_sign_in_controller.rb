@@ -22,4 +22,19 @@ class UserSignInController < ApplicationController
     end
   end
 
+  def login
+    user = UserSignIn.where(email: params[:session][:email].downcase).first
+    if user.present? && user.authenticate(params[:session][:password])
+      # Log the user in and redirect to the user's show page.
+      log_in user
+      redirect_to home_url
+    else
+      redirect_to error_url(:message => 'Invalid Login Credentials. Please Try again')
+    end
+  end
+
+  def logout
+    log_out
+    redirect_to home_url
+  end
 end
