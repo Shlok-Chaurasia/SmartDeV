@@ -25,14 +25,16 @@
             <%if product.product_stocks.count > 0 %>
             <select id="<%= product.id%>_qty" class="form-control">
               <%product.product_stocks.each do |product_stock|%>
-                  <option value="<%= product_stock.available_stock_in_grams%>">
+                  <option value="<%= product_stock.id%>">
                     <%= product_stock.available_stock_in_grams%>
                   </option>
               <%end%>
             </select>
             <%end%>
             <hr>
-            <input type="submit" value="1ahaha" id="<%= product.id%>" />
+            <a class ="btn btn-info btn-lg" href="javascript:DoPost(<%= product.id.to_s%>)">Add To Cart</a>
+            <!--<input type="submit" value="Add To cart" id="<%= product.id%>" />-->
+
             <!--<button id = 'create_btn' value="submit"-->
                     <!--onclick="addToCart(<%= product.id%>)" class="btn btn-warning btn-block">Add To Cart</button>-->
 
@@ -65,6 +67,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
     <script>
+        function DoPost(product_id){
+            var e = document.getElementById(product_id+"_qty");
+            var strUser = e.options[e.selectedIndex].value;
+            $.post("/products/add_product", { product_id: product_id, stock_id: strUser } );  //Your values here..
+        }
         $(document).ready(function(){
             $("form").submit(function(event){
                         alert($(this).attr("id"));

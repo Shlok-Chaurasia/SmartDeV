@@ -2,6 +2,7 @@ class CreateCustomer < ActiveRecord::Migration
   def change
     create_table :customers do |t|
       t.belongs_to :user_sign_in
+      t.has_many :customer_orders
       t.column :name, :string
       t.column :phone, :integer
       t.column :address, :string
