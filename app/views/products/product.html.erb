@@ -3,7 +3,6 @@
         <div class="col-12">
             <h2>More Products</h2>
           <p class="lead">
-            RandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandomRandom
           </p>
         </div><!--end col2-->
     </div>
@@ -14,7 +13,7 @@
       <%@products.each do |product|%>
 
         <div class="col-sm-3 feature">
-          <form id="<%= product.id%>">
+          <form class= "form-inline" id="<%= product.id%>">
           <div class="panel">
             <div class="panel-heading">
               <h3 class="panel-title"><%= product.name%></h3>
@@ -24,6 +23,7 @@
             <hr>
             <%if product.product_stocks.count > 0 %>
             <select id="<%= product.id%>_qty" class="form-control">
+              <option value="random" disabled = "true" selected = "true">Select Quantity</option>
               <%product.product_stocks.each do |product_stock|%>
                   <option value="<%= product_stock.id%>">
                     <%= product_stock.available_stock_in_grams%>
@@ -32,7 +32,11 @@
             </select>
             <%end%>
             <hr>
-            <a class ="btn btn-info btn-lg" href="javascript:DoPost(<%= product.id.to_s%>)">Add To Cart</a>
+            <a class ="btn btn-default btn-lg" href="javascript:DoPost(<%= product.id.to_s%>)">Add To Cart</a>
+            <a class ="btn btn-success btn-xs" href="">+</a>
+            <label class="alert-info">qty</label>
+            <a class ="btn btn-danger btn-xs" href="">-</a>
+
             <!--<input type="submit" value="Add To cart" id="<%= product.id%>" />-->
 
             <!--<button id = 'create_btn' value="submit"-->
@@ -68,9 +72,18 @@
 
     <script>
         function DoPost(product_id){
+            var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
             var e = document.getElementById(product_id+"_qty");
             var strUser = e.options[e.selectedIndex].value;
+
             $.post("/products/add_product", { product_id: product_id, stock_id: strUser } );  //Your values here..
+            var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+            for (var i = 0; i < options.length; i++) {
+                // lowercase comparison for case-insensitivity
+                (options[i].value.toLowerCase() == strUser)
+                        ? options[i].disabled = false
+                        : options[i].disabled = true ;
+            }
         }
         $(document).ready(function(){
             $("form").submit(function(event){
