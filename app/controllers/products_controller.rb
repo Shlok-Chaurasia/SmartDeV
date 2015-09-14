@@ -16,6 +16,23 @@ class ProductsController < ApplicationController
   end
 
   def add_product
+    product_id=params["product_id"]
+    stock_id=params["stock_id"]
+    customer = Customer.where(:user_sign_in_id => session[:user_id]).first
+    if customer.present?
+      customer_order = CustomerOrder.where(:customers_id => customer.id, :status => 'in_basket').first
+      if customer_order.present?
+        puts 'login_to_site'
+        CustomerOrderDetail.create!(:customer_orders_id => customer_order.id)
+        render :nothing => true, :status => 200, :content_type => 'json'
+      else
+        ActiveRecord::Base.transaction do
+          customer_order = CustomerOrder.create!(:customers_id => customer.id, :status => 'in_basket')
+          CustomerOrderDetail.create!(:customer_orders_id => customer_order.id)
+          render :nothing => true, :status => 200, :content_type => 'json'
+        end
+      end
+    end
 
   end
 

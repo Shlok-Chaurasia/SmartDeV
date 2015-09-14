@@ -75,15 +75,27 @@
             var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
             var e = document.getElementById(product_id+"_qty");
             var strUser = e.options[e.selectedIndex].value;
+            $.ajax({
+                url: "/products/add_product",
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+//                dataType: "json",
+                type: "POST",
+                data: { product_id: product_id, stock_id: strUser },
+                success: function (data) {
+                    var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+                    for (var i = 0; i < options.length; i++) {
+                        // lowercase comparison for case-insensitivity
+                        (options[i].value.toLowerCase() == strUser)
+                                ? options[i].disabled = false
+                                : options[i].disabled = true ;
+                    };
+                },
+                error:  function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);}
+            });
+//            $.post("/products/add_product", { product_id: product_id, stock_id: strUser } );  //Your values here..
 
-            $.post("/products/add_product", { product_id: product_id, stock_id: strUser } );  //Your values here..
-            var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
-            for (var i = 0; i < options.length; i++) {
-                // lowercase comparison for case-insensitivity
-                (options[i].value.toLowerCase() == strUser)
-                        ? options[i].disabled = false
-                        : options[i].disabled = true ;
-            }
         }
         $(document).ready(function(){
             $("form").submit(function(event){
