@@ -8,13 +8,32 @@
     <ul class="dropdown-menu">
       <li>
         <!--Insert your Logic for signup and UpdatemyuserAccount-->
-        <a href='#myModal' role = 'button' class ='btn' data-toggle="modal">
-          Your Order:
+        <a href='#myModal' role = 'button' class ='btn'>
+          Your Basket:
+          <br>
+          <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Number of units</th>
+            </tr>
+            </thead>
+            <% @drop_down_products.each do |product| %>
+                <tr id =<%= product.product_stock_id.to_s + "_tr" %>>
+                  <td class="nr"><%= product.name %></td>
+                  <td><%= product.available_stock_in_grams %></td>
+                  <td><%= product.quantity %></td>
+                  </tr>
+            <% end %>
+          </table>
         </a>
       </li>
+      <li> <a id ='show' href="/checkout/show">Review Order</a></li>
       <li class='divider'>
         <!--Insert your Logic for signout and Login-->
       <li class='dropdown-header'></li>
+
       <li>
         <a id="del" href="/logout/"><span class=" glyphicon glyphicon-off"> SignOut</span></a>
       </li>

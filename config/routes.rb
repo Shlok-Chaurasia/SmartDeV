@@ -9,6 +9,7 @@ Smarty::Application.routes.draw do
   match 'products/add_product' => 'products#add_product', :via => :post
   match 'error/' => 'errors#error'
   get    'login'   => 'sessions#new'
+  get 'checkout/show' => 'checkout#show'
   post   'login'   => 'user_sign_in#login'
   get 'logout'  => 'user_sign_in#logout'
   # The priority is based upon order of creation:

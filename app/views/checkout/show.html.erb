@@ -1,0 +1,39 @@
+<% content_for :product do %>
+    <br>
+    <button class="btn-large glyphicon-minus">Add more products</button>
+    <table class="table table-hover table-bordered">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Product Name</th>
+        <th>Category</th>
+        <th>Quantity</th>
+        <th>Number of units</th>
+        <th>Savings</th>
+        <th>Total</th>
+      </tr>
+      </thead>
+      <% @count = 0%>
+      <% @products.each do |product| %>
+          <% @count=@count+1%>
+          <tr id =<%= product.product_stock_id.to_s + "_tr" %>>
+            <td><%= @count%></td>
+            <td class="nr"><%= product.name %></td>
+            <td> <%= product.category_type %></td>
+            <td><%= product.available_stock_in_grams %></td>
+            <td><%= product.quantity %></td>
+            <td>5%</td>
+            <td>655</td>
+            <td><a class="btn mini blue-stripe" href="javascript:doDelete(<%= product.product_stock_id%>)">Edit</a></td>
+            <td><a href="#" class="confirm-delete btn mini red-stripe" role="button" data-title="johnny" data-id="1">Delete</a></td>
+          </tr>
+      <% end %>
+    </table>
+
+
+    <script>
+      function doDelete(product_stock_id) {
+          document.getElementById(product_stock_id+"_tr").remove();
+      }
+    </script>
+<% end %>

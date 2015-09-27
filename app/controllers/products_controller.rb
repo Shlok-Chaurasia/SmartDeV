@@ -19,10 +19,6 @@ class ProductsController < ApplicationController
       puts prod.prod_id, prod.prod_stock_id, prod.qty
       @prod_detail[prod.prod_id] = [prod.prod_stock_id, prod.qty]
     end
-    # puts "@prod_detail"
-    # puts @prod_detail
-    # puts "@products"
-    # puts @products
   end
 
   def partial_page
