@@ -1,3 +1,4 @@
 class CustomerOrderDetail < ActiveRecord::Base
-  has_one :product_stock
+  belongs_to :product_stock
+  belongs_to :customer_order
 end

@@ -35,3 +35,6 @@ product = Product.create!(:name => 'potato2',:category_type => VEGETABLE, :selle
                 :image_url => IMAGE_BASE_URL+'potato.jpg')
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+
+user_sign_in = UserSignIn.create(:user_name => 'shlokch', :password => 'waqodiwa', :email => 'shlokiit.name@gmail.com')
+Customer.create(:user_sign_in_id => user_sign_in.id, :name => 'shlok', :phone => 99163234)

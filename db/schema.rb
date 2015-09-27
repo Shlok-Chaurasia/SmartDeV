@@ -15,16 +15,17 @@ ActiveRecord::Schema.define(:version => 20150906100400) do
 
   create_table "customer_order_details", :force => true do |t|
     t.integer  "product_stock_id"
-    t.integer  "customer_orders_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "customer_order_id"
+    t.integer  "quantity",          :default => 1
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
   create_table "customer_orders", :force => true do |t|
-    t.integer  "customers_id"
+    t.integer  "customer_id"
     t.string   "status"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "customers", :force => true do |t|
