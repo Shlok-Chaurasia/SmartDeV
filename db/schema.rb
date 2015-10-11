@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150906100400) do
+ActiveRecord::Schema.define(:version => 20151010084029) do
+
+  create_table "customer_addresses", :force => true do |t|
+    t.integer "user_id"
+    t.string  "name"
+    t.string  "address"
+    t.string  "landmark"
+    t.integer "phone",    :limit => 8
+    t.integer "zipcode"
+  end
 
   create_table "customer_order_details", :force => true do |t|
     t.integer  "product_stock_id"
@@ -53,6 +62,12 @@ ActiveRecord::Schema.define(:version => 20150906100400) do
     t.string   "image_url"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "slots", :force => true do |t|
+    t.integer  "zipcode"
+    t.datetime "slot_date_time"
+    t.boolean  "is_active"
   end
 
   create_table "user_sign_ins", :force => true do |t|

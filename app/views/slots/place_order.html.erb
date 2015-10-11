@@ -1,0 +1,17 @@
+<% content_for :product do %>
+    <hr>
+    <h3 class="text-success">Thank you for placing order. Your Order will be delivered between <%= @slot.slot_date_time%> to following address:</h3>
+    <div class="col-12">
+      <div class="col-sm-3">
+        <div class="panel">
+          <label><%= @address.name %> </label> <hr>
+          <label>Address:</label> <%= @address.address %>
+          <%= @address.landmark %>
+          <%= @address.zipcode %><br>
+          <label>Phone:</label> <%= @address.phone %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <h6>Please call 9889287419 for any help.</h6>
+<%end%>

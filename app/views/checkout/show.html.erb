@@ -13,27 +13,87 @@
         <th>Total</th>
       </tr>
       </thead>
-      <% @count = 0%>
+      <% @count = 0 %>
       <% @products.each do |product| %>
-          <% @count=@count+1%>
-          <tr id =<%= product.product_stock_id.to_s + "_tr" %>>
-            <td><%= @count%></td>
+          <% @count=@count+1 %>
+          <tr id=<%= product.product_stock_id.to_s + "_tr" %>>
+            <td><%= @count %></td>
             <td class="nr"><%= product.name %></td>
             <td> <%= product.category_type %></td>
             <td><%= product.available_stock_in_grams %></td>
             <td><%= product.quantity %></td>
             <td>5%</td>
             <td>655</td>
-            <td><a class="btn mini blue-stripe" href="javascript:doDelete(<%= product.product_stock_id%>)">Edit</a></td>
-            <td><a href="#" class="confirm-delete btn mini red-stripe" role="button" data-title="johnny" data-id="1">Delete</a></td>
+            <td><a class="btn mini blue-stripe" href="javascript:doDelete(<%= product.product_stock_id %>);">Edit</a>
+            </td>
+            <td>
+              <a href="#" class="confirm-delete btn mini red-stripe" role="button" data-id="1">Delete</a>
+            </td>
           </tr>
       <% end %>
     </table>
+    <form action="/slots" method ="get">
+    <div class="col-12">
+      <h3>Select Address</h3>
+      <% if @saved_address.present? %>
+          <div class="tabbable">
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="#saved_address" data-toggle="tab">Select from saved address</a>
+              </li>
+              <li>
+                <a href="#create_address" data-toggle="tab">Create new address</a>
+              </li>
+            </ul>
 
+            <div class="tab-content">
+              <div class="tab-pane active" id="saved_address">
+                  <% @saved_address.each do |address| %>
+                      <div class="col-sm-3 feature">
+                        <div class="panel">
+                          <input type="radio" name="address_id" value="<%= address.id%>"> <label><%= address.name %> </label> <hr>
+                          <label>Address:</label> <%= address.address %>
+                          <%= address.landmark %>
+                          <%= address.zipcode %><br>
+                          <label>Phone:</label> <%= address.phone %>
+                        </div> <!--tab pane 1 panel -->
+                      </div><!--tab pane 1 row feature colsm-3-->
 
-    <script>
-      function doDelete(product_stock_id) {
-          document.getElementById(product_stock_id+"_tr").remove();
-      }
-    </script>
+                  <% end %>
+                  </div><!--tab pane 1 -->
+                  <div class="tab-pane" id="create_address">
+                    <label >Shlok</label>
+                  </div><!-- tab pane 2-->
+            </div><!--tab content-->
+          </div><!--tabbale-->
+
+      <% else %>
+
+      <% end %>
+      </div> <!--class col-12-->
+      <button id ='checkout' type="submit"  class="btn btn-default">Checkout</button>
+        </form>
+      <script>
+
+          //
+          //  $(function(){
+          //        $()
+          //
+          //      });
+//          function doDelete(product_stock_id) {
+////          alert("aja");
+//              $(function () {
+//                  alert('sss');
+//                  $("#" + product_stock_id + "_tr").onclick(function () {
+//                      alert('sss111');
+//                      $("#" + product_stock_id + "_tr").remove();
+//                  });
+//
+//              });
+//
+////          document.getElementById(product_stock_id+"_tr").remove();
+////          alert('asjksjaajk');
+//          }
+//          ;
+      </script>
 <% end %>

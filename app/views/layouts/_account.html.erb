@@ -1,6 +1,6 @@
 <% if logged_in?%>
 <ul class='nav navbar-nav pull-right'>
-  <li class='dropdown'>
+  <li class='dropdown' onclick="javascript:callShow()">
 
     <a href='#' class='dropdown-toggle' data-toggle="dropdown">
         Hello! <span class='glyphicon glyphicon-user'></span> <%= current_user.user_name%><strong class="caret"></strong>
@@ -11,6 +11,7 @@
         <a href='#myModal' role = 'button' class ='btn'>
           Your Basket:
           <br>
+          <div id = "basket">
           <table class="table table-hover table-bordered">
             <thead>
             <tr>
@@ -27,6 +28,7 @@
                   </tr>
             <% end %>
           </table>
+              </div>
         </a>
       </li>
       <li> <a id ='show' href="/checkout/show">Review Order</a></li>
@@ -70,6 +72,23 @@
 <%end%>
 
 <script>
+  function callShow()
+//  {     alert('calling show..');
+      $.ajax({
+          url: "/checkout/show_prod",
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          dataType: "json",
+          type: "get",
+          data: { },
+          success: function (data) {
+//            alert('success');
+          },
+          error:  function (xhr, ajaxOptions, thrownError) {
+//              alert(thrownError);
+
+          }
+      });
+  }
     function delete_user(){
         $(document).ready(function(){
             $('#del').on('click', function(event){

@@ -1,0 +1,37 @@
+<% content_for :product do %>
+    <hr>
+    <h3>Your Order will be delivered to following address:</h3>
+    <div class="col-12">
+      <div class="col-sm-3">
+        <div class="panel">
+          <label><%= @address.name %> </label> <hr>
+          <label>Address:</label> <%= @address.address %>
+          <%= @address.landmark %>
+          <%= @address.zipcode %><br>
+          <label>Phone:</label> <%= @address.phone %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <h3>Please select a slot:</h3>
+    <form action="/place_order" method="post">
+      <input name="authenticity_token"
+             type="hidden"
+             value="<%= form_authenticity_token %>"/>
+      <input name="address_id"
+             type="hidden"
+             value="<%= @address.id %>"/>
+      <div class="col-12">
+        <%@slots.each do |slot|%>
+            <div class="col-sm-3">
+              <div class="panel">
+                <div class="form-group">
+                  <input type="radio" name="slot_id" value="<%= slot.id%>"> <%= slot.slot_date_time%>
+                </div>
+              </div> <!--tab pane 1 panel -->
+            </div><!--tab pane 1 row feature colsm-3-->
+        <%end%>
+      </div>
+      <button id ='place_order' type="submit"  class="btn btn-default">Place Order</button>
+    </form>
+<%end%>

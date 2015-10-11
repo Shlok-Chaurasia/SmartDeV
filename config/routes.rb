@@ -10,8 +10,11 @@ Smarty::Application.routes.draw do
   match 'error/' => 'errors#error'
   get    'login'   => 'sessions#new'
   get 'checkout/show' => 'checkout#show'
+  get 'checkout/show_prod' => 'checkout#show_prod'
   post   'login'   => 'user_sign_in#login'
   get 'logout'  => 'user_sign_in#logout'
+  get 'slots' => 'slots#show_slot'
+  post 'place_order' => 'slots#place_order'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
