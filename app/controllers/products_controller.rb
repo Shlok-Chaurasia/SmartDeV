@@ -3,9 +3,12 @@ class ProductsController < ApplicationController
     @all_product_count ||= Product.count
     puts "params['page_number']"
     puts params['page_number']
+
     if params['page_number'].nil?
+      @page_number = 0
       @products = Product.order(:id).limit(12)
     else
+      @page_number = params['page_number']
       @products = Product.order(:id).limit(12).offset(12*params['page_number'].to_i)
     end
     prod_qty = Customer.joins({:customer_order => {:customer_order_detail => {:product_stock => :product}}}).

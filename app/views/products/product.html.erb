@@ -89,13 +89,14 @@
 
 
     <div class='col-8 pagination' id='pagination'>
-    <ul class="pagination" id="page1">
+    <ul id ="ul_page" class="pagination" id="page1">
       <%@product_pages = @all_product_count/12 %>
       <% @product_pages.times do |number|%>
-          <li><a href="/product/fruits?page_number=<%= number%>"><%= number+1%></a></li>
+          <% page_id = "page_num#{number}"%>
+          <li class="btn-info" id="<%= page_id%>"><a  href="/product/fruits?page_number=<%= number%>"><%= number+1%></a></li>
       <% end%>
       <%unless @all_product_count - @product_pages == 0 %>
-          <li><a href="/product/fruits?page_number=<%= @product_pages%>"><%= @product_pages+1%></a></li>
+          <li id = "<%= "page_num#{@page_number}"%>"><a href="/product/fruits?page_number=<%= @product_pages%>"><%= @product_pages+1%></a></li>
       <% end%>
     </ul>
     </div>
@@ -113,6 +114,19 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
     <script>
+        $( document ).ready(function() {
+            var options = <%= "page_num#{@page_number}"%>;
+            $('#ul_page').children().each(function(idx, li){
+                li.className = "btn-info";
+            });
+            options.className="active";
+        });
+//      function click_page(page_id){
+//          alert('hhhh');
+//          var options = document.getElementById(page_id);
+//          options.className="active";
+//          return true;
+//      }
         function DoPost(product_id, is_decrement){
             var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
             var e = document.getElementById(product_id+"_qty");
