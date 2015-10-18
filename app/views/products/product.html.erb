@@ -89,8 +89,15 @@
 
 
     <div class='col-8 pagination' id='pagination'>
-    <ul id ="ul_page" class="pagination" id="page1">
+    <ul id ="ul_page" class="pagination pagination-lg" id="page1">
       <%@product_pages = @all_product_count/12 %>
+
+      <li class="prev">
+        <a href="javascript:nextPrevPage(-1,<%= @product_pages%>);" aria-label="Previous">
+          <span aria-hidden="true">&laquo;Prev</span>
+        </a>
+      </li>
+
       <% @product_pages.times do |number|%>
           <% page_id = "page_num#{number}"%>
           <li class="btn-info" id="<%= page_id%>"><a  href="/product/fruits?page_number=<%= number%>"><%= number+1%></a></li>
@@ -98,6 +105,11 @@
       <%unless @all_product_count - @product_pages == 0 %>
           <li id = "<%= "page_num#{@page_number}"%>"><a href="/product/fruits?page_number=<%= @product_pages%>"><%= @product_pages+1%></a></li>
       <% end%>
+      <li class="next">
+        <a href="javascript:nextPrevPage(1, <%= @product_pages%>);" aria-label="Next">
+          <span aria-hidden="true">Next&raquo;</span>
+        </a>
+      </li>
     </ul>
     </div>
     <div class="col-4">
@@ -117,10 +129,28 @@
         $( document ).ready(function() {
             var options = <%= "page_num#{@page_number}"%>;
             $('#ul_page').children().each(function(idx, li){
-                li.className = "btn-info";
+                li.className = "";
             });
             options.className="active";
         });
+        function nextPrevPage(addInt, maxInt){
+            $('#ul_page').children().each(function(idx, li){
+                var page_number = li.id.replace ( /[^\d.]/g, '' );
+                var pageToRedirect= parseInt(page_number) + addInt;
+                if(li.className == 'active' && pageToRedirect >= 0 && pageToRedirect <= maxInt)
+                {   var page_number = li.id.replace ( /[^\d.]/g, '' );
+                    window.location.href = "/product/fruits?page_number="+(parseInt(page_number)+addInt).toString();
+                }
+                else
+                {   if(li.className == 'active' && pageToRedirect < 0)
+                        alert("This is first page");
+                    if(li.className == 'active' && pageToRedirect > maxInt)
+                        alert("Reached end of the products browsing");
+
+                }
+
+            });
+        }
 //      function click_page(page_id){
 //          alert('hhhh');
 //          var options = document.getElementById(page_id);

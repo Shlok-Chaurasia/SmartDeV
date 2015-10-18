@@ -11,30 +11,75 @@ SELLER_ID = 1
 IMAGE_BASE_URL = '/my_images/products/'
 
 
-product = Product.create!(:name => 'apple1',:category_type => FRUITS, :seller_id => SELLER_ID, :price=>220.00,
-                :image_url => IMAGE_BASE_URL+'apple.jpg')
+product = Product.create!(:name => 'Desi Apple',:category_type => FRUITS, :seller_id => SELLER_ID, :price=>220.00,
+                :image_url => IMAGE_BASE_URL+'apple1.jpg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>1000, :is_available => true)
+
+product = Product.create!(:name => 'Kashmiri Apple',:category_type => FRUITS, :seller_id => SELLER_ID+1, :price=>220.00,
+                :image_url => IMAGE_BASE_URL+'apple2.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>1000, :is_available => true)
+
+product = Product.create!(:name => 'Wheat Corn',:category_type => FRUITS, :seller_id => SELLER_ID+2, :price=>220.00,
+                :image_url => IMAGE_BASE_URL+'corn.jpeg')
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
 
-product = Product.create!(:name => 'apple2',:category_type => FRUITS, :seller_id => SELLER_ID+1, :price=>220.00,
-                :image_url => IMAGE_BASE_URL+'apple.jpg')
+product = Product.create!(:name => 'Garlic',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                :image_url => IMAGE_BASE_URL+'garlic.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>100, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+
+product = Product.create!(:name => 'Ginger',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                :image_url => IMAGE_BASE_URL+'ginger.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>100, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+
+product = Product.create!(:name => 'Green Capsicum',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'green_capsicum.jpg')
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
 
-product = Product.create!(:name => 'apple3',:category_type => FRUITS, :seller_id => SELLER_ID+2, :price=>220.00,
-                :image_url => IMAGE_BASE_URL+'apple.jpg')
+product = Product.create!(:name => 'Green Chilli',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'green_chilli.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>100, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
+
+product = Product.create!(:name => 'Onion',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'onion.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>1000, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>5000, :is_available => true)
+
+product = Product.create!(:name => 'Old Potato',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'potato1.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>1000, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>5000, :is_available => true)
+
+product = Product.create!(:name => 'New Potato',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'potato2.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>1000, :is_available => true)
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>5000, :is_available => true)
+
+product = Product.create!(:name => 'Red Capsicum',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'red_capsicum.jpeg')
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
 
-product = Product.create!(:name => 'potato1',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
-                :image_url => IMAGE_BASE_URL+'potato.jpg')
+product = Product.create!(:name => 'Red Chilli',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'red_chilli.jpg')
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
 
-product = Product.create!(:name => 'potato2',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
-                :image_url => IMAGE_BASE_URL+'potato.jpg')
+product = Product.create!(:name => 'Yellow Capsicum',:category_type => VEGETABLE, :seller_id => SELLER_ID, :price => 220.00,
+                          :image_url => IMAGE_BASE_URL+'yellow_capsicum.jpeg')
+ProductStock.create(:product_id => product.id, :available_stock_in_grams =>100, :is_available => true)
 ProductStock.create(:product_id => product.id, :available_stock_in_grams =>250, :is_available => true)
-ProductStock.create(:product_id => product.id, :available_stock_in_grams =>500, :is_available => true)
 
 user_sign_in = UserSignIn.create(:user_name => 'shlokch', :password => 'waqodiwa', :email => 'shlokiit.name@gmail.com')
 customer_addr = []
