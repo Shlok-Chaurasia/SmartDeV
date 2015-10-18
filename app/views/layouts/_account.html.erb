@@ -1,14 +1,17 @@
 <% if logged_in?%>
 <ul class='nav navbar-nav pull-right'>
-  <li class='dropdown' onclick="javascript:callShow()">
+  <li class='dropdown' onclick="javascript:callShow();">
 
     <a href='#' class='dropdown-toggle' data-toggle="dropdown">
         Hello! <span class='glyphicon glyphicon-user'></span> <%= current_user.user_name%><strong class="caret"></strong>
     </a>
     <ul class="dropdown-menu " style="max-height: 300px;overflow: hidden;overflow-y: auto;">
+      <% if @drop_down_products.present?%>
       <li>
         <!--Insert your Logic for signup and UpdatemyuserAccount-->
+
         <a href='#myModal' role = 'button' class ='btn'>
+
           Your Basket:
           <br>
           <div id = "basket">
@@ -23,15 +26,21 @@
             <% @drop_down_products.each do |product| %>
                 <tr id =<%= product.product_stock_id.to_s + "_tr" %>>
                   <td class="nr"><%= product.name %></td>
-                  <td><%= product.available_stock_in_grams %></td>
+                  <td><%= product.available_stock.to_s+" "+product.available_stock_unit %></td>
                   <td><%= product.quantity %></td>
                   </tr>
             <% end %>
           </table>
               </div>
+
         </a>
       </li>
-      <li> <a id ='show' href="/checkout/show">Review Order</a></li>
+        <%end%>
+      <% if @drop_down_products.present?%>
+        <li> <a id ='show' href="/checkout/show"> Review Order </a></li>
+      <%else%>
+          <li> <a id ='add_product' href="/product/fruits"> Add Products </a></li>
+      <%end%>
       <li class='divider'>
         <!--Insert your Logic for signout and Login-->
       <li class='dropdown-header'></li>
@@ -73,7 +82,7 @@
 
 <script>
   function callShow()
-//  {     alert('calling show..');
+    {
       $.ajax({
           url: "/checkout/show_prod",
           beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},

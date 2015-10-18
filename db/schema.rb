@@ -48,10 +48,13 @@ ActiveRecord::Schema.define(:version => 20151010084029) do
 
   create_table "product_stocks", :force => true do |t|
     t.integer  "product_id"
-    t.float    "available_stock_in_grams"
+    t.float    "available_stock"
+    t.string   "available_stock_unit"
+    t.float    "mrp"
+    t.float    "selling_price"
     t.boolean  "is_available"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
 
   create_table "products", :force => true do |t|

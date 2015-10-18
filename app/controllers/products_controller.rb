@@ -1,9 +1,6 @@
 class ProductsController < ApplicationController
   def product
     @all_product_count ||= Product.count
-    puts "params['page_number']"
-    puts params['page_number']
-
     if params['page_number'].nil?
       @page_number = 0
       @products = Product.order(:id).limit(12)
@@ -15,13 +12,17 @@ class ProductsController < ApplicationController
         where(:user_sign_in_id => session[:user_id]).
         where("customer_orders.status in ('in_basket')").
         select("products.id as prod_id, product_stocks.id as prod_stock_id, customer_order_details.quantity as qty")
+    puts "prod_qty"
+    puts prod_qty
+    puts "------"
+    puts session[:user_id]
     @prod_detail = {}
-    puts "prod_qty.inspect"
-    puts prod_qty.inspect
     prod_qty.each do |prod|
       puts prod.prod_id, prod.prod_stock_id, prod.qty
       @prod_detail[prod.prod_id] = [prod.prod_stock_id, prod.qty]
     end
+    puts "@prod_detail"
+    puts @prod_detail
   end
 
   def partial_page
@@ -43,6 +44,7 @@ class ProductsController < ApplicationController
       customer_order = CustomerOrder.where(:customer_id => customer.id, :status => 'in_basket').first
       if customer_order.present?
         customer_order_detail = CustomerOrderDetail.find_by_customer_order_id_and_product_stock_id(customer_order.id, stock_id)
+        puts customer_order_detail.inspect
         if customer_order_detail.present?
           customer_order_detail.update_attributes!(:quantity => customer_order_detail.quantity + qty_to_increment)
           qty = customer_order_detail.quantity
