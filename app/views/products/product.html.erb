@@ -73,16 +73,17 @@
             <br>
             <br>
             <span >MRP:</span> <span class="accordion-inner"><strike id ="<%= product.id.to_s+"_mrp"%>" class="strikeout"> <%= @sp[product.id]%></strike></span>
-            <span id =<%= product.id.to_s+"_sp"%>> <%= @mrp[product.id]%></span>
+            <span id =<%= product.id.to_s+"_sp"%>> <b><%= @mrp[product.id]%></b></span>
 
             <a class ="btn btn-default btn-small" href="javascript:DoPost(<%= product.id.to_s%>)">Add To Cart</a>
-            <br>
-            <br>
-            Your Basket Status:
-            <a class ="btn btn-success btn-xs glyphicon-plus" href="javascript:DoPost(<%= product.id.to_s%>)"></a>
-            <label class="alert-info " id = "<%= product.id%>_label"><%= @prod_detail[product.id].present? ? @prod_detail[product.id][1] : 0%></label>
-            <a class ="btn btn-danger btn-xs glyphicon-minus" href="javascript:DoPost(<%= product.id.to_s%>, true)"></a>
-
+            <% if logged_in?%>
+                <br>
+                <br>
+                Your Basket Status:
+                <a class ="btn btn-success btn-xs glyphicon-plus" href="javascript:DoPost(<%= product.id.to_s%>);"></a>
+                <label class="alert-info " id = "<%= product.id%>_label"><%= @prod_detail[product.id].present? ? @prod_detail[product.id][1] : 0%></label>
+                <a class ="btn btn-danger btn-xs glyphicon-minus" href="javascript:DoPost(<%= product.id.to_s%>, true);"></a>
+            <%end%>
             <!--<input type="submit" value="Add To cart" id="<%= product.id%>" />-->
 
             <!--<button id = 'create_btn' value="submit"-->
