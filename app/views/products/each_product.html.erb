@@ -1,0 +1,98 @@
+<% content_for :product do %>
+    <hr>
+    <div class="col-sm-12">
+      <div class="col-sm-7">
+        <img src="<%= @product.image_url  %>" alt="<%= @product.name %>" class="img-responsive" style="width:450px;height:400px" title="this is a fruit">
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="col-sm-5 feature">
+        <div class="panel">
+          <%if @prod_qty.present?%>
+              <label class="text-info">
+                Your Basket already has <span id ="qty_prod"><%= @prod_qty.qty %> </span> <%= " packets of " + @prod_qty.available_stock.to_s + " "%> <%= @prod_qty.available_stock_unit%> <%= @product.name%>. Please add/reduce:
+              </label>
+              <br>
+              <input class="btn-small btn-success glyphicon-plus" id ="ep_submit" type="button" value="Add <%= @prod_qty.available_stock.to_s+" "+@prod_qty.available_stock_unit%> more" onsubmit="return add_quantity();">
+              <input class="btn-small btn-danger glyphicon-minus" id ="ep_submit" type="button" value="Reduce <%= @prod_qty.available_stock.to_s+" "+@prod_qty.available_stock_unit%>" onsubmit="return add_quantity();">
+          <%else%>
+              <%@product_stocks.each do |prod_stock|%>
+              <label class="radio-inline control-label">
+                <input type="radio" name="qty_radio" class="text-center">
+                <%= prod_stock.available_stock.to_s+" "+prod_stock.available_stock_unit.to_s%>, <b>Price:</b> <%= prod_stock.selling_price%>
+              </label>
+                  <br>
+              <%end%>
+              <!--this.style.width = ((this.value.length + 1) * 8) + 'px';-->
+              <input id="ep_qty" class="input-small" type="number" style="width: 48px" maxlength="2" value="" oninput="return validate_integer_input();">
+              <input class="btn-small btn-success" id ="ep_submit" type="button" value="Add quantity" onsubmit="return add_quantity();">
+          <%end%>
+
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <script>
+      function validate_integer_input()
+      {
+        var strQty = document.getElementById("ep_qty").value;
+        if (parseInt(strQty) > 10 || strQty.length>2 )
+        {
+          alert("Can't have more than 10 quantity");
+          document.getElementById("ep_qty").value = strQty.substring(0, strQty.length-1);
+          return false;
+        }
+        if (parseInt(strQty) < 0)
+        {
+          alert("Please select more than 0 quantity");
+          document.getElementById("ep_qty").value = 0;
+          return false;
+        }
+        return true;
+      }
+
+      function DoPost(product_id, selected_stock_id, is_decrement){
+        if ($("#"+product_id+"_label").text() == "0" && is_decrement)
+        {
+          alert("No quantity selected.");
+          return;
+        }
+        $.ajax({
+          url: "/products/add_product",
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+          dataType: "json",
+          type: "POST",
+          data: { product_id: product_id, stock_id: selected_stock_id, is_decrement: is_decrement },
+          success: function (data) {
+            if (data !== 0)
+            {var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+              for (var i = 0; i < options.length; i++) {
+                (options[i].value.toLowerCase() == selected_stock_id)
+                        ? options[i].disabled = false
+                        : options[i].disabled = true ;
+              };
+            }
+            else{
+            }
+
+                      },
+          error:  function (xhr, ajaxOptions, thrownError) {
+            if(xhr.status == 404)
+            {
+              $("#error").attr('style','visibility: visible');
+            }
+            else{
+              alert(thrownError);
+              $("#error").attr('style','visibility: visible');
+            }
+          }
+        });
+
+      }
+    </script>
+<%end%>

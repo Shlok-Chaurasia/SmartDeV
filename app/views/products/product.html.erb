@@ -4,23 +4,23 @@
     <br>
     <div class="row">
       <div class="col-8">
-      <div class="alert alert-danger fade in" id = 'error' style= "visibility: hidden">
+        <div class="alert alert-danger fade in" id = 'error' style= "visibility: hidden">
 
-        <!--<a href="#" class="close" data-dismiss="alert">&times;</a>-->
-<!---->
-        <strong>Error!</strong> Please login to continue.
+          <!--<a href="#" class="close" data-dismiss="alert">&times;</a>-->
+          <!---->
+          <strong>Error!</strong> Please login to continue.
 
-      </div>
         </div>
+      </div>
       <div class="col-4">
-    <div class='row' id='featuresHeading' xmlns="http://www.w3.org/1999/html">
-      <!--<div class="col-12">-->
-        <!--<h2>More Products</h2>-->
+        <div class='row' id='featuresHeading' xmlns="http://www.w3.org/1999/html">
+          <!--<div class="col-12">-->
+          <!--<h2>More Products</h2>-->
 
-        <p class="lead">
-          <a href="/checkout/show" class="btn btn-danger btn-small pull-right" >Checkout</a>
-        </p>
-    </div><!--end col2-->
+          <p class="lead">
+            <a href="/checkout/show" class="btn btn-danger btn-small pull-right" >Checkout</a>
+          </p>
+        </div><!--end col2-->
       </div>
     </div>
     <!--</div>-->
@@ -30,130 +30,229 @@
 
       <%@products.each do |product|%>
 
-        <div class="col-sm-3 feature">
-          <form class= "form-inline" id="<%= product.id%>">
-          <div class="panel">
-            <div class="panel-heading">
-              <h3 class="panel-title"><%= product.name%></h3>
-            </div><!--end-panel-heading-->
-            <img src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle" width="100" height="100">
-            <%if product.product_stocks.count > 0 %>
-                <%@mrp = {}%>
-                <%@sp = {}%>
-            <select id="<%= product.id%>_qty" class="form-control" style="width: 115px" onchange="mrpChange(<%= product.id%>);">
-              <option value="random" disabled = "true" >Select Quantity</option>
-              <%@stock_counter = 0%>
-              <%product.product_stocks.each do |product_stock|%>
-                  <% if @prod_detail[product.id]%>
-                      <% if @prod_detail[product.id][0].to_s == product_stock.id.to_s%>
-                          <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s %>" selected = "true">
-                            <%@mrp[product.id] = product_stock.mrp%>
-                            <%@sp[product.id] = product_stock.selling_price%>
-                      <%else%>
-                          <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s%>" disabled = "true">
+          <div class="col-sm-3 feature">
+            <form class= "form-inline" id="<%= product.id%>">
+              <div class="panel text-center">
+                <div class="panel-heading">
+                  <h3 class="panel-title" ><a href="/product/each_product/<%= product.id %>"><%= product.name%></a></h3>
+                </div><!--end-panel-heading-->
+                <a href="/product/each_product/<%= product.id %>">
+                  <img src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle" width="100" height="100" title="this is a fruit">
+                </a>
+
+                <%if product.product_stocks.count > 0 %>
+                    <%@mrp = {}%>
+                    <%@sp = {}%>
+                    <select id="<%= product.id%>_qty" class="form-control" style="width: 115px" onchange="mrpChange(<%= product.id%>);">
+                      <option value="random" disabled = "true" >Select Quantity</option>
+                      <%@stock_counter = 0%>
+                      <%product.product_stocks.each do |product_stock|%>
+                          <% if @prod_detail[product.id]%>
+                              <% if @prod_detail[product.id][0].to_s == product_stock.id.to_s%>
+                                  <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s %>" selected = "true">
+                                    <%@mrp[product.id] = product_stock.mrp%>
+                                    <%@sp[product.id] = product_stock.selling_price%>
+                              <%else%>
+                                  <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s%>" disabled = "true">
+                              <%end%>
+                              <%= product_stock.available_stock.to_s+" "+product_stock.available_stock_unit%>
+                              </option>
+                          <%else%>
+                              <%= @stock_counter=@stock_counter+1%>
+                              <%if @stock_counter==1%>
+                                  <%@mrp[product.id] = product_stock.mrp%>
+                                  <%@sp[product.id] = product_stock.selling_price%>
+                                  <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s%>" selected="true">
+                              <%else%>
+                                  <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s%>">
+                              <%end%>
+
+                              <%= product_stock.available_stock.to_s+" "+product_stock.available_stock_unit%>
+                              </option>
+                          <%end %>
                       <%end%>
-                        <%= product_stock.available_stock.to_s+" "+product_stock.available_stock_unit%>
-                      </option>
+                    </select>
+                <%end%>
+                <br>
+                <br>
+
+                <label class="text-center">
+                  <span >MRP:</span> <del style='text-decoration:line-through;'> <span id ="<%= product.id.to_s+"_mrp"%>" style='color:black' class="accordion-inner"><%= @sp[product.id]%></span></del>
+                  <span id =<%= product.id.to_s+"_sp"%>> <b><%= @mrp[product.id]%></b></span>
+                  <br>
+                  <br>
+                </label>
+                  <%if @prod_detail[product.id].present?%>
+                      <div id = "<%= product.id.to_s%>remove_from_basket">
+                        <a class ="btn btn-default btn-small" href="javascript:removeAllBasket('<%= product.id.to_s %>','<%= product.name.to_s %>')">Remove from basket</a>
+                      </div>
+                      <div id = "<%= product.id.to_s%>add_to_basket" style="display:none;">
+                        <input id="<%= product.id.to_s%>pm_qty" class="input-small" type="number" style="width: 48px" maxlength="2" value="" onchange="return validate_integer_input(<%= product.id.to_s%>);">
+                        <a id="<%= product.id.to_s%>add_basket_link" class ="btn btn-default btn-small" href="javascript:AddQty(<%= product.id.to_s%>)">Add To basket</a>
+                      </div>
                   <%else%>
-                      <%= @stock_counter=@stock_counter+1%>
-                      <%if @stock_counter==1%>
-                          <%@mrp[product.id] = product_stock.mrp%>
-                          <%@sp[product.id] = product_stock.selling_price%>
-                          <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s%>" selected="true">
-                      <%else%>
-                          <option value="<%= product_stock.mrp.to_s+":"+product_stock.selling_price.to_s+ ":" +product_stock.id.to_s%>">
-                      <%end%>
+                      <div id = "<%= product.id.to_s%>remove_from_basket" style="display:none;">
+                        <a class ="btn btn-default btn-small" href="javascript:removeAllBasket('<%= product.id.to_s %>' , '<%= product.name.to_s %>')">Remove from basket</a>
+                      </div>
+                      <div id = "<%= product.id.to_s%>add_to_basket">
+                        <input id="<%= product.id.to_s%>pm_qty" class="input-small" type="number" style="width: 48px" maxlength="2" value="" onchange="return validate_integer_input(<%= product.id.to_s%>);">
+                        <a id="<%= product.id.to_s%>add_basket_link" class ="btn btn-default btn-small" href="javascript:AddQty(<%= product.id.to_s%>)">Add To basket</a>
+                      </div>
+                  <%end%>
+                  <% if logged_in?%>
+                      <br>
+                      <br>
 
-                    <%= product_stock.available_stock.to_s+" "+product_stock.available_stock_unit%>
-                  </option>
-                  <%end %>
-              <%end%>
-            </select>
-            <%end%>
-            <br>
-            <br>
-            <span >MRP:</span> <span class="accordion-inner"><strike id ="<%= product.id.to_s+"_mrp"%>" class="strikeout"> <%= @sp[product.id]%></strike></span>
-            <span id =<%= product.id.to_s+"_sp"%>> <b><%= @mrp[product.id]%></b></span>
+                      Basket Status:
+                      <a class ="btn btn-danger btn-xs glyphicon-minus" href="javascript:DoPost(<%= product.id.to_s%>, true);"></a>
+                      <label class="alert-info " id = "<%= product.id%>_label"><%= @prod_detail[product.id].present? ? @prod_detail[product.id][1] : 0%></label>
+                      <a class ="btn btn-success btn-xs glyphicon-plus" href="javascript:DoPost(<%= product.id.to_s%>);"></a>
 
-            <a class ="btn btn-default btn-small" href="javascript:DoPost(<%= product.id.to_s%>)">Add To Cart</a>
-            <% if logged_in?%>
-                <br>
-                <br>
-                Your Basket Status:
-                <a class ="btn btn-success btn-xs glyphicon-plus" href="javascript:DoPost(<%= product.id.to_s%>);"></a>
-                <label class="alert-info " id = "<%= product.id%>_label"><%= @prod_detail[product.id].present? ? @prod_detail[product.id][1] : 0%></label>
-                <a class ="btn btn-danger btn-xs glyphicon-minus" href="javascript:DoPost(<%= product.id.to_s%>, true);"></a>
-            <%end%>
-            <!--<input type="submit" value="Add To cart" id="<%= product.id%>" />-->
+                <%end%>
+                <!--</div>-->
+                <!--<input type="submit" value="Add To cart" id="<%= product.id%>" />-->
 
-            <!--<button id = 'create_btn' value="submit"-->
-                    <!--onclick="addToCart(<%= product.id%>)" class="btn btn-warning btn-block">Add To Cart</button>-->
+                <!--<button id = 'create_btn' value="submit"-->
+                <!--onclick="addToCart(<%= product.id%>)" class="btn btn-warning btn-block">Add To Cart</button>-->
 
-          </div>
-          </form>
+              </div>
+            </form>
 
-        </div> <!--end-feature-->
+          </div> <!--end-feature-->
 
 
       <%end%>
     </div>
-      <!--<div id="button-more" onclick=load_page();>-->
-        <!--Load more items-->
-      <!--</div>-->
-      <!--<div id="loading-div">-->
-        <!--loading more items-->
-      <!--</div>-->
+    <!--<div id="button-more" onclick=load_page();>-->
+    <!--Load more items-->
+    <!--</div>-->
+    <!--<div id="loading-div">-->
+    <!--loading more items-->
+    <!--</div>-->
     <!--</div>-->
     <div class="row">
 
 
-    <div class='col-8 pagination' id='pagination'>
-    <ul id ="ul_page" class="pagination pagination-lg" id="page1">
-      <%@product_pages = @all_product_count/12 %>
+      <div class='col-8 pagination' id='pagination'>
+        <ul id ="ul_page" class="pagination pagination-lg" id="page1">
+          <%@product_pages = @all_product_count/12 %>
 
-      <li class="prev">
-        <a href="javascript:nextPrevPage(-1,<%= @product_pages%>);" aria-label="Previous">
-          <span aria-hidden="true">&laquo;Prev</span>
-        </a>
-      </li>
+          <li class="prev">
+            <a href="javascript:nextPrevPage(-1,<%= @product_pages%>);" aria-label="Previous">
+              <span aria-hidden="true">&laquo;Prev</span>
+            </a>
+          </li>
 
-      <% @product_pages.times do |number|%>
-          <% page_id = "page_num#{number}"%>
-          <li class="btn-info" id="<%= page_id%>"><a  href="/product/fruits?page_number=<%= number%>"><%= number+1%></a></li>
-      <% end%>
-      <%unless @all_product_count - @product_pages == 0 %>
-          <li id = "<%= "page_num#{@page_number}"%>"><a href="/product/fruits?page_number=<%= @product_pages%>"><%= @product_pages+1%></a></li>
-      <% end%>
-      <li class="next">
-        <a href="javascript:nextPrevPage(1, <%= @product_pages%>);" aria-label="Next">
-          <span aria-hidden="true">Next&raquo;</span>
-        </a>
-      </li>
-    </ul>
-    </div>
-    <div class="col-4">
-      <div class='row' id='featuresHeading' xmlns="http://www.w3.org/1999/html">
-        <!--<div class="col-12">-->
-        <!--<h2>More Products</h2>-->
+          <% @product_pages.times do |number|%>
+              <% page_id = "page_num#{number}"%>
+              <li class="btn-info" id="<%= page_id%>"><a  href="/product/fruits?page_number=<%= number%>"><%= number+1%></a></li>
+          <% end%>
+          <%unless @all_product_count - @product_pages == 0 %>
+              <li id = "<%= "page_num#{@page_number}"%>"><a href="/product/fruits?page_number=<%= @product_pages%>"><%= @product_pages+1%></a></li>
+          <% end%>
+          <li class="next">
+            <a href="javascript:nextPrevPage(1, <%= @product_pages%>);" aria-label="Next">
+              <span aria-hidden="true">Next&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-4">
+        <div class='row' id='featuresHeading' xmlns="http://www.w3.org/1999/html">
+          <!--<div class="col-12">-->
+          <!--<h2>More Products</h2>-->
 
-        <p class="lead">
-          <a href="/checkout/show" class="btn btn-danger btn-small pull-right" >Checkout</a>
-        </p>
-      </div><!--end col2-->
-    </div>
+          <p class="lead">
+            <a href="/checkout/show" class="btn btn-danger btn-small pull-right" >Checkout</a>
+          </p>
+        </div><!--end col2-->
+      </div>
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 
     <script>
+        function validate_integer_input(product_id)
+        {
+            var strQty = document.getElementById(product_id+"pm_qty").value;
+            if (parseInt(strQty) > 10 || strQty.length>2 )
+            {
+                alert("Can't have more than 10 quantity");
+                document.getElementById(product_id+"pm_qty").value = strQty.substring(0, strQty.length-1);
+                return false;
+            }
+            if (parseInt(strQty) < 0)
+            {
+                alert("Please select more than 0 quantity");
+                document.getElementById(product_id+"pm_qty").value = 0;
+                return false;
+            }
+            return true;
+        }
+        function AddQty(product_id)
+        {
+            if (validate_integer_input(product_id))
+            {
+                var strQty = document.getElementById(product_id+"pm_qty").value;
+                var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+                var ul = document.getElementById(product_id+"_qty");
+                var li_selected_value = ul.options[ul.selectedIndex].value;
+                var selected_stock_id = li_selected_value.split(":")[2];
+                $.ajax({
+                    url: "/products/add_product_to_basket",
+                    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                    dataType: "json",
+                    type: "POST",
+                    data: { product_id: product_id, stock_id: selected_stock_id, quantity: strQty },
+                    success: function (data) {
+                        if (data !== 0)
+                        {   var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+                            for (var i = 0; i < options.length; i++) {
+                                (options[i].value.toLowerCase() == selected_stock_id)
+                                        ? options[i].disabled = false
+                                        : options[i].disabled = true ;
+                            };
 
-      function mrpChange(product_id)
-      {
-          var ul = document.getElementById(product_id + "_qty");
-          var li_selected_value = ul.options[ul.selectedIndex].value;
-          document.getElementById(product_id + "_sp").innerHTML = li_selected_value.split(":")[0];
-          document.getElementById(product_id + "_mrp").innerHTML = li_selected_value.split(":")[1];
+                            $("#"+product_id+"_label").text(data);
+                            document.getElementById(product_id+"remove_from_basket").style.display = null;
+                            document.getElementById(product_id+"add_to_basket").style.display = "none";
+                        }
+                        else{
+                            alert('No quantity selected');
+                            var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+                            for (var i = 1; i < options.length; i++) {
+                                options[i].disabled = false
+                            };
+                        }
 
-      }
+
+                    },
+                    error:  function (xhr, ajaxOptions, thrownError) {
+                        if(xhr.status == 404)
+                        {
+                            $("#error").attr('style','visibility: visible');
+                        }
+                        else{
+                            alert(thrownError);
+                            $("#error").attr('style','visibility: visible');
+                        }
+                    }
+                });
+
+
+            }
+
+        }
+
+
+        function mrpChange(product_id)
+        {
+            var ul = document.getElementById(product_id + "_qty");
+            var li_selected_value = ul.options[ul.selectedIndex].value;
+            document.getElementById(product_id + "_sp").innerHTML = li_selected_value.split(":")[0];
+            document.getElementById(product_id + "_mrp").innerHTML = li_selected_value.split(":")[1];
+
+        }
+
         $( document ).ready(function() {
             var page_num = <%= @page_number%>;
             var active_li = document.getElementById("page_num"+page_num);
@@ -173,7 +272,7 @@
                 }
                 else
                 {   if(li.className == 'active' && pageToRedirect < 0)
-                        alert("This is first page");
+                    alert("This is first page");
                     if(li.className == 'active' && pageToRedirect > maxInt)
                         alert("Reached end of the products browsing");
 
@@ -181,7 +280,13 @@
 
             });
         }
+
         function DoPost(product_id, is_decrement){
+            if ($("#"+product_id+"_label").text() == "0")
+            {
+                alert("Please add product to basket");
+                return;
+            }
             var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
             var ul = document.getElementById(product_id+"_qty");
             var li_selected_value = ul.options[ul.selectedIndex].value;
@@ -198,21 +303,22 @@
                 type: "POST",
                 data: { product_id: product_id, stock_id: selected_stock_id, is_decrement: is_decrement },
                 success: function (data) {
-                 if (data !== 0)
-                 {var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
-                    for (var i = 0; i < options.length; i++) {
-                        (options[i].value.toLowerCase() == selected_stock_id)
-                                ? options[i].disabled = false
-                                : options[i].disabled = true ;
-                    };
-                 }
+                    if (data !== 0)
+                    {var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+                        for (var i = 0; i < options.length; i++) {
+                            (options[i].value.toLowerCase() == selected_stock_id)
+                                    ? options[i].disabled = false
+                                    : options[i].disabled = true ;
+                        };
+                        refreshBasket();
+                    }
                     else{
-                     alert('No quantity selected');
-                     var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
-                    for (var i = 1; i < options.length; i++) {
-                        options[i].disabled = false
-                    };
-                 }
+                        alert('No quantity selected');
+                        var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+                        for (var i = 1; i < options.length; i++) {
+                            options[i].disabled = false
+                        };
+                    }
                     $("#"+product_id+"_label").text(data);
                 },
                 error:  function (xhr, ajaxOptions, thrownError) {
@@ -228,42 +334,108 @@
             });
 
         }
-//        $(document).ready(function(){
-//            $("form").submit(function(event){
-//                        alert($(this).attr("id"));
-//                        var select_id = $(this).attr("id") + "_qty";
-//                        var quantity = $("#"+select_id +" option:selected").text();
-//                        alert(quantity);
-//                var formData = {
-//                    'product_id'              : $(this).attr("id"),
-//                    'quantity'             : quantity
-//                };
-//
-//                // process the form
-//                $.ajax({
-//                    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-//                    url         : '/add_product', // the url where we want to POST
-//                    data        : formData, // our data object
-//                    dataType    : 'json', // what type of data do we expect back from the server
-//                    encode          : true
-//                })
-//                    // using the done promise callback
-//                        .done(function(data) {
-//
-//                            // log data to the console so we can see
-//                            console.log(data);
-//
-//                            // here we will handle errors and validation messages
-//                        });
-//
-//                // stop the form from submitting the normal way and refreshing the page
-//                event.preventDefault();
-//
-//
-//
-//
-//                    });
-//
-//        });
+        function removeAllBasket(product_id, product_name){
+            var ul = document.getElementById(product_id+"_qty");
+            var li_selected_value = ul.options[ul.selectedIndex].value;
+            var selected_stock_id = li_selected_value.split(":")[2];
+            if (confirm('Are you sure you want to completely remove '+product_name.toString()+" from basket?")) {
+                $.ajax({
+                    url: "/products/remove_from_basket",
+                    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                    dataType: "json",
+                    type: "POST",
+                    data: { product_id: product_id, stock_id: selected_stock_id},
+                    success: function (data) {
+                        if (data !== 0)
+                        {
+                            var options = document.getElementById(product_id+"_qty").getElementsByTagName("option");
+                            for (var i = 1; i < options.length; i++) {
+                                options[i].disabled = false
+                            };
+                            $("#"+product_id+"_label").text(0);
+                            document.getElementById(product_id+"remove_from_basket").style.display = "none";
+                            document.getElementById(product_id+"add_to_basket").style.display = null;
+                        }
+                    },
+                    error:  function (xhr, ajaxOptions, thrownError) {
+                        if(xhr.status == 404)
+                        {
+                            $("#error").attr('style','visibility: visible');
+                        }
+                        else{
+                            alert(thrownError);
+                            $("#error").attr('style','visibility: visible');
+                        }
+                    }
+                });
+            } else {
+                alert('Why did you press cancel? You should have confirmed');
+            }
+        }
+        function addQuantityToBasket(product_id, stock_id, quantity)
+        {
+
+        }
+        function refreshBasket()
+        {
+            var table_rows = document.getElementById('basket_content').rows;
+
+            $.ajax({
+                url: "/checkout/show_prod",
+                beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+                dataType: "json",
+                type: "GET",
+                success: function (data) {
+                    alert(data);
+                },
+                error:  function (xhr, ajaxOptions, thrownError) {
+                    if(xhr.status == 404)
+                    {
+                        $("#error").attr('style','visibility: visible');
+                    }
+                    else{
+                        alert(thrownError);
+                        $("#error").attr('style','visibility: visible');
+                    }
+                }
+            });
+        }
+        //        $(document).ready(function(){
+        //            $("form").submit(function(event){
+        //                        alert($(this).attr("id"));
+        //                        var select_id = $(this).attr("id") + "_qty";
+        //                        var quantity = $("#"+select_id +" option:selected").text();
+        //                        alert(quantity);
+        //                var formData = {
+        //                    'product_id'              : $(this).attr("id"),
+        //                    'quantity'             : quantity
+        //                };
+        //
+        //                // process the form
+        //                $.ajax({
+        //                    type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+        //                    url         : '/add_product', // the url where we want to POST
+        //                    data        : formData, // our data object
+        //                    dataType    : 'json', // what type of data do we expect back from the server
+        //                    encode          : true
+        //                })
+        //                    // using the done promise callback
+        //                        .done(function(data) {
+        //
+        //                            // log data to the console so we can see
+        //                            console.log(data);
+        //
+        //                            // here we will handle errors and validation messages
+        //                        });
+        //
+        //                // stop the form from submitting the normal way and refreshing the page
+        //                event.preventDefault();
+        //
+        //
+        //
+        //
+        //                    });
+        //
+        //        });
     </script>
 <% end %>

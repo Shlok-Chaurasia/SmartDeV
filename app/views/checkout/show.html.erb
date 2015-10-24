@@ -1,37 +1,34 @@
 <% content_for :product do %>
     <br>
     <button class="btn-large glyphicon-minus">Add more products</button>
-    <table class="table table-hover table-bordered">
+    <div class="col-sm-9">
+    <table class="table table-hover table-condensed">
       <thead>
       <tr>
         <th>#</th>
         <th>Product Name</th>
         <th>Category</th>
         <th>Quantity</th>
-        <th>Number of units</th>
-        <th>Savings</th>
-        <th>Total</th>
+        <th>Total Amount</th>
       </tr>
       </thead>
       <% @count = 0 %>
       <% @products.each do |product| %>
           <% @count=@count+1 %>
-          <tr id=<%= product.product_stock_id.to_s + "_tr" %>>
+          <tr class="text-info" id=<%= product.product_stock_id.to_s + "_tr" %> >
             <td><%= @count %></td>
             <td class="nr"><%= product.name %></td>
             <td> <%= product.category_type %></td>
-            <td><%= product.available_stock_in_grams %></td>
-            <td><%= product.quantity %></td>
-            <td>5%</td>
-            <td>655</td>
-            <td><a class="btn mini blue-stripe" href="javascript:doDelete(<%= product.product_stock_id %>);">Edit</a>
-            </td>
+            <td><%= product.available_stock.to_s + " " + product.available_stock_unit%> x <%= product.quantity%></td>
+            <td><%= product.quantity%>x<%= product.mrp%>=<%= product.quantity*product.mrp %></td>
             <td>
               <a href="#" class="confirm-delete btn mini red-stripe" role="button" data-id="1">Delete</a>
             </td>
           </tr>
       <% end %>
     </table>
+      </div>
+    <br>
     <form action="/slots" method ="get">
     <div class="col-12">
       <h3>Select Address</h3>

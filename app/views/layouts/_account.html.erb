@@ -1,11 +1,11 @@
 <% if logged_in?%>
-<ul class='nav navbar-nav pull-right'>
-  <li class='dropdown' onclick="javascript:callShow();">
+<ul id = "drop-down-basket" class='nav navbar-nav pull-right'>
+  <li  class='dropdown' onclick="javascript:callShow();">
 
     <a href='#' class='dropdown-toggle' data-toggle="dropdown">
         Hello! <span class='glyphicon glyphicon-user'></span> <%= current_user.user_name%><strong class="caret"></strong>
     </a>
-    <ul class="dropdown-menu " style="max-height: 300px;overflow: hidden;overflow-y: auto;">
+    <ul class="dropdown-menu" style="max-height: 300px;overflow: hidden;overflow-y: auto;">
       <% if @drop_down_products.present?%>
       <li>
         <!--Insert your Logic for signup and UpdatemyuserAccount-->
@@ -15,16 +15,16 @@
           Your Basket:
           <br>
           <div id = "basket">
-          <table class="table table-hover table-bordered">
+          <table id="basket_content"class="table table-hover table-bordered">
             <thead>
-            <tr>
-              <th>Product Name</th>
+            <tr bgcolor="white">
+              <th>Product</th>
               <th>Quantity</th>
-              <th>Number of units</th>
+              <th>Units</th>
             </tr>
             </thead>
             <% @drop_down_products.each do |product| %>
-                <tr id =<%= product.product_stock_id.to_s + "_tr" %>>
+                <tr bgcolor="white" id =<%= product.product_stock_id.to_s + "_tr" %> >
                   <td class="nr"><%= product.name %></td>
                   <td><%= product.available_stock.to_s+" "+product.available_stock_unit %></td>
                   <td><%= product.quantity %></td>

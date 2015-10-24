@@ -1,12 +1,4 @@
 /*
-
-My Custom CSS
-=============
-
-Author:  Brad Hussey
-Updated: August 2013
-Notes:	 Hand coded for Udemy.com
-
 */
 /*----------For moving footer to bottom------------*/
 html,
@@ -25,6 +17,12 @@ body {
    padding: 0 0 160px;
 }
 
+#drop-down-basket > li > ul > li a:hover, #drop-down-basket > li > a:focus {
+   background-color:white !important;
+
+}
+
+/*style="max-height: 300px;overflow: hidden;overflow-y: auto;"*/
 /* Set the fixed height of the footer here */
 
 /* --------------------------------------
@@ -78,13 +76,28 @@ body {
 Footer
 */
 
+/*footer{*/
+   /*background:#333;*/
+   /*color: #eee;*/
+   /*font-size: 11px;*/
+   /*padding: 20px;*/
+   /*height: 160px;*/
+/*}*/
 footer{
    background:#333;
    color: #eee;
    font-size: 11px;
-   padding: 20px;
+   /*padding: 20px;*/
    height: 160px;
 }
+#footer_container{
+   background:#333;
+
+}
+/*footer, .push {*/
+   /*height: 160px; /!* .push must be the same height as .footer *!/*/
+   /*background:#333;*/
+/*}*/
 /* --------------------------------------
    Global Styles
    -------------------------------------- */

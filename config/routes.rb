@@ -4,6 +4,7 @@ Smarty::Application.routes.draw do
   root :to => 'user_sign_in#home'
   match 'home/' => 'user_sign_in#home'
   match "create_user/" => "user_sign_in#create", :via => :post
+  get "product/each_product/:id" => "products#each_product"
   match 'product/fruits' => 'products#product'
   match 'products/partial_page' => 'products#partial_page'
   match 'products/add_product' => 'products#add_product', :via => :post
@@ -15,6 +16,8 @@ Smarty::Application.routes.draw do
   get 'logout'  => 'user_sign_in#logout'
   get 'slots' => 'slots#show_slot'
   post 'place_order' => 'slots#place_order'
+  post 'products/add_product_to_basket'=> 'products#add_quantity'
+  post 'products/remove_from_basket'=> 'products#remove_from_basket'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
