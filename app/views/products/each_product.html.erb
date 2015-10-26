@@ -36,7 +36,33 @@
       </div>
     </div>
     <hr>
+    <div class="col-sm-9">
+        <div class="tabbable">
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a href="#about" data-toggle="tab">About</a>
+            </li>
+            <li>
+              <a href="#benefits" data-toggle="tab">Nutritional Facts</a>
+            </li>
+            <li>
+              <a href="#how_to_use" data-toggle="tab">How to use</a>
+            </li>
+          </ul>
 
+          <div class="tab-content">
+            <div class="tab-pane active" id="about">
+              <%= @product_description.about%>
+            </div><!--tab pane 1 -->
+            <div class="tab-pane" id="benefits">
+              <%= @product_description.benefits%>
+            </div><!-- tab pane 2-->
+            <div class="tab-pane" id="how_to_use">
+              <%= @product_description.how_to_use%>
+            </div><!-- tab pane 2-->
+          </div><!--tab content-->
+        </div>
+    </div>
     <script>
       function validate_integer_input()
       {
