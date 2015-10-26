@@ -16,6 +16,7 @@ Smarty::Application.routes.draw do
   get 'logout'  => 'user_sign_in#logout'
   get 'slots' => 'slots#show_slot'
   post 'place_order' => 'slots#place_order'
+  post 'save_add' => 'slots#save_address'
   post 'products/add_product_to_basket'=> 'products#add_quantity'
   post 'products/remove_from_basket'=> 'products#remove_from_basket'
   # The priority is based upon order of creation:

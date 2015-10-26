@@ -21,7 +21,7 @@
 <body>
 <%= csrf_meta_tag %>
 <div id="wrap">
-  <div class='container' id='main'>
+  <div class='container' id='main'style="background-color: lightgoldenrodyellow">
     <%= render 'layouts/header' %>
     <hr>
     <%= yield :carousel %>
@@ -43,6 +43,9 @@
 
 <!-- Bootstrap JS -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/sweetalert.css">
+
 
 <!-- Custom JS -->
 <script src="/includes/js/script.js"></script>

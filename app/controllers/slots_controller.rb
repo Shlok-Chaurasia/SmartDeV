@@ -20,4 +20,12 @@ class SlotsController < ApplicationController
     @slot = Slot.find_by_id(params[:slot_id])
     @address = CustomerAddress.find_by_id!(params[:address_id])
   end
+
+  def save_address
+    puts 'params'
+    puts params
+    customer_add = CustomerAddress.create!(:user_id => session[:user_id], :address => [params["flat_num"],params["street_add"]].join(" "),
+                            :landmark => params["landmark"], :phone=>params["phone_num"],:zipcode => params["pincode"])
+    redirect_to action: "show_slot", address_id: customer_add.id
+  end
 end

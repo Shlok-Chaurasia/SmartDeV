@@ -1,11 +1,9 @@
 <% content_for :product do %>
     <br>
-    <button class="btn-large glyphicon-minus">Add more products</button>
     <div class="col-sm-9">
     <table class="table table-hover table-condensed">
       <thead>
       <tr>
-        <th>#</th>
         <th>Product Name</th>
         <th>Category</th>
         <th>Quantity</th>
@@ -16,11 +14,11 @@
       <% @products.each do |product| %>
           <% @count=@count+1 %>
           <tr class="text-info" id=<%= product.product_stock_id.to_s + "_tr" %> >
-            <td><%= @count %></td>
+
             <td class="nr"><%= product.name %></td>
             <td> <%= product.category_type %></td>
             <td><%= product.available_stock.to_s + " " + product.available_stock_unit%> x <%= product.quantity%></td>
-            <td><%= product.quantity%>x<%= product.mrp%>=<%= product.quantity*product.mrp %></td>
+            <td><%= product.quantity%> x <%= product.mrp%> = <%= product.quantity*product.mrp %></td>
             <td>
               <a href="#" class="confirm-delete btn mini red-stripe" role="button" data-id="1">Delete</a>
             </td>
@@ -30,7 +28,7 @@
       </div>
     <br>
     <form action="/slots" method ="get">
-    <div class="col-12">
+    <div class="col-sm-9">
       <h3>Select Address</h3>
       <% if @saved_address.present? %>
           <div class="tabbable">
@@ -45,21 +43,52 @@
 
             <div class="tab-content">
               <div class="tab-pane active" id="saved_address">
+                <br>
                   <% @saved_address.each do |address| %>
-                      <div class="col-sm-3 feature">
-                        <div class="panel">
-                          <input type="radio" name="address_id" value="<%= address.id%>"> <label><%= address.name %> </label> <hr>
-                          <label>Address:</label> <%= address.address %>
+                      <div class="col-sm-3" >
+                        <div class="panel" style="background-image: url('/my_images/address.png'); background-color: #737373; color:lightgoldenrodyellow;">
+                          <span class="input-small">
+                            <input type="radio" name="address_id" value="<%= address.id%>"> <%= address.name %>
+                          </span>
+                          <label><%= address.address %></label>
                           <%= address.landmark %>
                           <%= address.zipcode %><br>
-                          <label>Phone:</label> <%= address.phone %>
+                          <label> <%= address.phone %></label>
+
                         </div> <!--tab pane 1 panel -->
                       </div><!--tab pane 1 row feature colsm-3-->
 
                   <% end %>
+                <!--class col-12-->
+                <button id ='checkout' type="submit"  class="btn btn-primary">Continue</button>
+                </form>
                   </div><!--tab pane 1 -->
                   <div class="tab-pane" id="create_address">
-                    <label >Shlok</label>
+                    <div class="col-6">
+                    <form action="/save_add" method="post" id ="address_save" >
+                      <hr>
+                      <div class="form-group">
+                        <input class="form-control" id="name" name="" type="text" placeholder="Name" required >
+                      </div>
+                      <div class="form-group">
+                        <input class="form-control" id="flat_num" name="flat_num" type="Address" placeholder="Flat No/House No" required>
+                      </div>
+                      <div class="form-group">
+                        <input class="form-control" id="street_add" name="street_add" type="Address" placeholder="Street Address" required>
+                      </div>
+                      <div class="form-group">
+                        <input class="form-control" id="landmark" name="landmark" type="Address" placeholder="Landmark" required>
+                      </div>
+                      <div class="form-group">
+                        <input class="form-control" id="pincode" name="pincode" type="address" placeholder="PinCode" required>
+                      </div>
+                      <div class="form-group">
+                        <input class="form-control" id="phone_num" name="phone_num" type="number" placeholder="Phone Number" required>
+                      </div>
+
+                      <button class="btn btn-primary" name="submit" type="submit" id = "address_save">Save address and continue</button>
+                    </form>
+                      </div>
                   </div><!-- tab pane 2-->
             </div><!--tab content-->
           </div><!--tabbale-->
@@ -67,9 +96,7 @@
       <% else %>
 
       <% end %>
-      </div> <!--class col-12-->
-      <button id ='checkout' type="submit"  class="btn btn-default">Checkout</button>
-        </form>
+      </div>
       <script>
 
           //

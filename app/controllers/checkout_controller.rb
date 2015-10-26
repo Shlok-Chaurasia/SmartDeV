@@ -15,4 +15,6 @@ class CheckoutController < ApplicationController
         where("customer_orders.status in ('in_basket')")
     render :nothing => true, :status => 204, :content_type => 'text/html'
   end
+
+
 end

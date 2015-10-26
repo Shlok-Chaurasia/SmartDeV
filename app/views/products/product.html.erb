@@ -191,7 +191,7 @@
             }
             if (parseInt(strQty) < 0)
             {
-                alert("Please select more than 0 quantity");
+                sweetAlert("Please select more than 0 quantity", "error");//("Please select more than 0 quantity");
                 document.getElementById(product_id+"pm_qty").value = 0;
                 return false;
             }
