@@ -1,7 +1,9 @@
 <% content_for :product do %>
     <br>
-    <div class="col-sm-9">
-    <table class="table table-hover table-condensed">
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-9 text-center">
+    <table class="table table-hover table-striped">
       <thead>
       <tr>
         <th>Product Name</th>
@@ -13,7 +15,7 @@
       <% @count = 0 %>
       <% @products.each do |product| %>
           <% @count=@count+1 %>
-          <tr class="text-info" id=<%= product.product_stock_id.to_s + "_tr" %> >
+          <tr class="info" id=<%= product.product_stock_id.to_s + "_tr" %> >
 
             <td class="nr"><%= product.name %></td>
             <td> <%= product.category_type %></td>
@@ -47,14 +49,13 @@
                   <% @saved_address.each do |address| %>
                       <div class="col-sm-3" >
                         <div class="panel" style="background-image: url('/my_images/address.png'); background-color: #737373; color:lightgoldenrodyellow;">
-                          <span class="input-small">
-                            <input type="radio" name="address_id" value="<%= address.id%>"> <%= address.name %>
-                          </span>
-                          <label><%= address.address %></label>
+                          <address>
+                            <input type="radio" name="address_id" value="<%= address.id%>"> <strong><%= address.name %></strong>
+                          <%= address.address %>
                           <%= address.landmark %>
                           <%= address.zipcode %><br>
-                          <label> <%= address.phone %></label>
-
+                            <abbr title="Phone">P: </abbr><%= address.phone %>
+                          </address>
                         </div> <!--tab pane 1 panel -->
                       </div><!--tab pane 1 row feature colsm-3-->
 
@@ -96,6 +97,8 @@
       <% else %>
 
       <% end %>
+      </div>
+      <div class="col-sm-2">
       </div>
       <script>
 

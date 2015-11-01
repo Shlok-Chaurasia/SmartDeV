@@ -1,57 +1,65 @@
 <% if logged_in?%>
-<ul id = "drop-down-basket" class='nav navbar-nav pull-right'>
-  <li  class='dropdown' onclick="javascript:callShow();">
+    <ul id = "drop-down-basket" class='nav navbar-nav pull-right'>
+      <li  class='dropdown' onclick="javascript:callShow();">
 
-    <a href='#' class='dropdown-toggle' data-toggle="dropdown">
-        Hello! <span class='glyphicon glyphicon-user'></span> <%= current_user.user_name%><strong class="caret"></strong>
-    </a>
-    <ul class="dropdown-menu" style="max-height: 300px;overflow: hidden;overflow-y: auto;">
-      <% if @drop_down_products.present?%>
-      <li>
-        <!--Insert your Logic for signup and UpdatemyuserAccount-->
-
-        <a href='#myModal' role = 'button' class ='btn'>
-
-          Your Basket:
-          <br>
-          <div id = "basket">
-          <table id="basket_content"class="table table-hover table-bordered">
-            <thead>
-            <tr bgcolor="white">
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Units</th>
-            </tr>
-            </thead>
-            <% @drop_down_products.each do |product| %>
-                <tr bgcolor="white" id =<%= product.product_stock_id.to_s + "_tr" %> >
-                  <td class="nr"><%= product.name %></td>
-                  <td><%= product.available_stock.to_s+" "+product.available_stock_unit %></td>
-                  <td><%= product.quantity %></td>
-                  </tr>
-            <% end %>
-          </table>
-              </div>
-
+        <a href='#' class='dropdown-toggle' data-toggle="dropdown">
+          Hello! <span class='glyphicon glyphicon-user'></span> <%= current_user.user_name%><strong class="caret"></strong>
         </a>
-      </li>
-        <%end%>
-      <% if @drop_down_products.present?%>
-        <li> <a id ='show' href="/checkout/show"> Review Order </a></li>
-      <%else%>
-          <li> <a id ='add_product' href="/product/fruits"> Add Products </a></li>
-      <%end%>
-      <li class='divider'>
-        <!--Insert your Logic for signout and Login-->
-      <li class='dropdown-header'></li>
+        <ul class="dropdown-menu" style="max-height: 300px;overflow: hidden;overflow-y: auto;">
+          <% if @drop_down_products.present?%>
+              <li style="background-color: white">
+                <!--Insert your Logic for signup and UpdatemyuserAccount-->
 
-      <li>
-        <a id="del" href="/logout/"><span class=" glyphicon glyphicon-off"> SignOut</span></a>
+                <a href='#myModal' role = 'button' class ='btn'>
+                  <label>Your Basket:</label>
+                  <br>
+                  <div id = "basket" class="text-center">
+                    <table id="basket_content" class="table table-hover table-striped" border="0">
+                      <thead>
+                      <tr bgcolor="white">
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                      </tr>
+                      </thead>
+                      <% product_total = 0%>
+                      <% @drop_down_products.each do |product| %>
+                          <%product_desc = ProductDescription.find_by_product_id(product.id)%>
+                          <tr title="<%= product_desc.about%>" onclick="window.document.location='/product/each_product/<%= product.id %>';" bgcolor="white" id =<%= product.product_stock_id.to_s + "_tr" %> >
+                            <td class="nr">
+                              <img id = "prod_img" src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle" width="75" height="75">
+                              <%= product.name %>
+                            </td>
+                            <td><%= product.available_stock.to_s+" "+product.available_stock_unit %> x <%= product.quantity %></td>
+                            <td><%= product.quantity*product.price %><%product_total+=product.quantity*product.price%></td>
+                          </tr>
+                      <% end %>
+                      <tr bgcolor="white" class="text-center">
+                        <td colspan="2"><label>Total Amount:</label></td>
+                        <td ><%= product_total%></td>
+                      </tr>
+                    </table>
+                  </div>
+
+                </a>
+              </li>
+          <%end%>
+          <% if @drop_down_products.present?%>
+              <li> <a id ='show' href="/checkout/show"> Review Order </a></li>
+          <%else%>
+              <li> <a id ='add_product' href="/product/fruits"> Add Products </a></li>
+          <%end%>
+          <li class='divider'>
+            <!--Insert your Logic for signout and Login-->
+          <li class='dropdown-header'></li>
+
+          <li>
+            <a id="del" href="/logout/"><span class=" glyphicon glyphicon-off"> SignOut</span></a>
+          </li>
       </li>
-     </li>
     </ul>
     </li>
-</ul><!--end userAccount nav pullright-->
+    </ul><!--end userAccount nav pullright-->
 <%else%>
     <ul class='nav navbar-nav pull-right'>
       <li class='dropdown'>
@@ -73,31 +81,31 @@
             </a>
           </li>
 
-    </ul>
-    </li>
+        </ul>
+      </li>
 
     </ul><!--end userAccount nav pullright-->
 
 <%end%>
 
 <script>
-  function callShow()
+    function callShow()
     {
-      $.ajax({
-          url: "/checkout/show_prod",
-          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-          dataType: "json",
-          type: "get",
-          data: { },
-          success: function (data) {
+        $.ajax({
+            url: "/checkout/show_prod",
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            dataType: "json",
+            type: "get",
+            data: { },
+            success: function (data) {
 //            alert('success');
-          },
-          error:  function (xhr, ajaxOptions, thrownError) {
+            },
+            error:  function (xhr, ajaxOptions, thrownError) {
 //              alert(thrownError);
 
-          }
-      });
-  }
+            }
+        });
+    }
     function delete_user(){
         $(document).ready(function(){
             $('#del').on('click', function(event){

@@ -21,7 +21,7 @@
 <body>
 <%= csrf_meta_tag %>
 <div id="wrap">
-  <div class='container' id='main'style="background-color: lightgoldenrodyellow">
+  <div class='container' id='main'>
     <%= render 'layouts/header' %>
     <hr>
     <%= yield :carousel %>
@@ -45,7 +45,8 @@
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <script src="/sweetalert.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/sweetalert.css">
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <!-- Custom JS -->
 <script src="/includes/js/script.js"></script>
@@ -55,6 +56,10 @@
       interval: 3000
     })
   });
+  $(function() {
+    $( document ).tooltip();
+  });
+
 </script>
 </body>
 </html>

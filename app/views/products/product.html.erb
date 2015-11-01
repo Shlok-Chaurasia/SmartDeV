@@ -26,7 +26,7 @@
     <!--</div>-->
     <!--end featuresHeading-->
 
-    <div class='row' id="features" >
+    <div class='row' id="features_prod" >
 
       <%@products.each_with_index do | product, index|%>
 
@@ -37,7 +37,8 @@
                   <h3 class="panel-title" ><a href="/product/each_product/<%= product.id %>"><%= product.name%></a></h3>
                 </div><!--end-panel-heading-->
                 <a href="/product/each_product/<%= product.id %>">
-                  <img id = "prod_img" src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle" width="100" height="100" title="this is a fruit">
+                  <%product_desc = ProductDescription.find_by_product_id(product.id)%>
+                  <img id = "prod_img" src="<%= product.image_url  %>" alt="<%= product.name %>" class="img-circle" width="100" height="100" title="<%= product_desc.about%>>">
                 </a>
 
                 <%if product.product_stocks.count > 0 %>
@@ -77,26 +78,26 @@
                 <br>
 
                 <label class="text-center">
-                  <span >MRP:</span> <del style='text-decoration:line-through;'> <span id ="<%= product.id.to_s+"_mrp"%>" style='color:black' class="accordion-inner"><%= @sp[product.id]%></span></del>
+                  <span >MRP:</span> <s style='text-decoration:line-through;'> <span id ="<%= product.id.to_s+"_mrp"%>" style='color:black' class="accordion-inner"><%= @sp[product.id]%></span></s>
                   <span id =<%= product.id.to_s+"_sp"%>> <b><%= @mrp[product.id]%></b></span>
                   <br>
                   <br>
                 </label>
                   <%if @prod_detail[product.id].present?%>
                       <div id = "<%= product.id.to_s%>remove_from_basket">
-                        <a class ="btn btn-default btn-small" href="javascript:removeAllBasket('<%= product.id.to_s %>','<%= product.name.to_s %>')">Remove from basket</a>
+                        <a title="Remove whole product from basket" class ="btn btn-default btn-small" href="javascript:removeAllBasket('<%= product.id.to_s %>','<%= product.name.to_s %>')">Remove from basket</a>
                       </div>
                       <div id = "<%= product.id.to_s%>add_to_basket" style="display:none;">
                         <input id="<%= product.id.to_s%>pm_qty" class="input-small" type="number" style="width: 48px" maxlength="2" value="1" onchange="return validate_integer_input(<%= product.id.to_s%>);">
-                        <a id="<%= product.id.to_s%>add_basket_link" class ="btn btn-default btn-small" href="javascript:AddQty(<%= product.id.to_s%>)">Add To basket</a>
+                        <a title = "Add to basket" id="<%= product.id.to_s%>add_basket_link" class ="btn btn-default btn-small" href="javascript:AddQty(<%= product.id.to_s%>)">Add To basket</a>
                       </div>
                   <%else%>
                       <div id = "<%= product.id.to_s%>remove_from_basket" style="display:none;">
-                        <a class ="btn btn-default btn-small" href="javascript:removeAllBasket('<%= product.id.to_s %>' , '<%= product.name.to_s %>')">Remove from basket</a>
+                        <a title="Remove whole product from basket" class ="btn btn-default btn-small" href="javascript:removeAllBasket('<%= product.id.to_s %>' , '<%= product.name.to_s %>')">Remove from basket</a>
                       </div>
                       <div id = "<%= product.id.to_s%>add_to_basket">
                         <input id="<%= product.id.to_s%>pm_qty" class="input-small" type="number" style="width: 48px" maxlength="2" value="1" onchange="return validate_integer_input(<%= product.id.to_s%>);">
-                        <a id="<%= product.id.to_s%>add_basket_link" class ="btn btn-default btn-small" href="javascript:AddQty(<%= product.id.to_s%>)">Add To basket</a>
+                        <a title = "Add to basket"  id="<%= product.id.to_s%>add_basket_link" class ="btn btn-default btn-small" href="javascript:AddQty(<%= product.id.to_s%>)">Add To basket</a>
                       </div>
                   <%end%>
                   <% if logged_in?%>
@@ -104,9 +105,9 @@
                       <br>
 
                       Basket Status:
-                      <a class ="btn btn-danger btn-xs glyphicon-minus" href="javascript:DoPost(<%= product.id.to_s%>, true);"></a>
-                      <label class="alert-info " id = "<%= product.id%>_label"><%= @prod_detail[product.id].present? ? @prod_detail[product.id][1] : 0%></label>
-                      <a class ="btn btn-success btn-xs glyphicon-plus" href="javascript:DoPost(<%= product.id.to_s%>);"></a>
+                      <a title="Decrease quantity" class ="btn btn-danger btn-xs glyphicon-minus" href="javascript:DoPost(<%= product.id.to_s%>, true);"></a>
+                      <label  class="alert-info " id = "<%= product.id%>_label"><%= @prod_detail[product.id].present? ? @prod_detail[product.id][1] : 0%></label>
+                      <a title="Increase quantity" class ="btn btn-success btn-xs glyphicon-plus" href="javascript:DoPost(<%= product.id.to_s%>);"></a>
 
                 <%end%>
                 <!--</div>-->
@@ -420,26 +421,6 @@
 //                        $(this).animate({ 'zoom': 1 }, 400);
 //                    });
 //        });
-        $(document).ready( function() {
-            $('.img-circle')
-                    .on('mouseenter', function () {
-                        var div = $(this);
-                        div.stop(true, true).animate({
-                            margin: -10,
-                            width: "+=30",
-                            height: "+=30"
-                        }, 'fast');
-                    })
-                    .on('mouseleave', function () {
-                        var div = $(this);
-                        div.stop(true, true).animate({
-                            margin: 0,
-                            width: "-=30",
-                            height: "-=30"
-                        }, 'fast');
-                    });
-        });
-
 //        $(".img-circle").hover(function() {
 //            $(this).closest(".img").css("z-index", 1);
 //
